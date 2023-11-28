@@ -10,8 +10,11 @@ module axil_regfile_axis_wr #
     parameter REG_NUM    = 1024
 )
 (
-    input  wire                     clk,
-    input  wire                     rst,
+    input  wire                     axil_clk,
+    input  wire                     axil_rst,
+
+    input  wire                     axis_clk,
+    input  wire                     axis_rst,
 
     output wire                     s_axis_tready,
     input  wire[DATA_WIDTH-1:0]     s_axis_tdata,
@@ -77,8 +80,8 @@ module axil_regfile_axis_wr #
     assign s_axil_rresp     = axi_rresp;
     assign s_axil_rvalid    = axi_rvalid;
 
-    always @( posedge clk) begin
-        if (rst) begin
+    always @( posedge axil_clk) begin
+        if (axil_rst) begin
             axi_awready <= 1'b0;
             aw_en <= 1'b1;
         end
@@ -96,16 +99,16 @@ module axil_regfile_axis_wr #
         end
     end
 
-    always @( posedge clk ) begin
-        if (rst) begin
+    always @( posedge axil_clk ) begin
+        if (axil_rst) begin
             axi_awaddr <= 0;
         end else if (~axi_awready && s_axil_awvalid && s_axil_wvalid && aw_en) begin
             axi_awaddr <= s_axil_awaddr;
         end
     end
 
-    always @( posedge clk ) begin
-        if (rst) begin
+    always @( posedge axil_clk ) begin
+        if (axil_rst) begin
             axi_wready <= 1'b0;
         end 
         else begin    
@@ -125,8 +128,8 @@ module axil_regfile_axis_wr #
     assign axi_reg_sel = ({REG_NUM{1'b0}} + 1) << (axis_wrAddr[OPT_MEM_ADDR_BITS:0]);
     assign slv_reg_wren_vec = axi_reg_sel & {REG_NUM{slv_reg_wren}};
 
-    always@(posedge clk) begin
-        if (rst) begin
+    always@(posedge axis_clk) begin
+        if (axis_rst) begin
             axis_wrAddr <= 0;
             axis_write_num <= 0;
         end else if(slv_reg_wren && s_axis_tlast) begin
@@ -140,8 +143,8 @@ module axil_regfile_axis_wr #
     genvar i;
     generate
         for( i = 0 ; i <= REG_NUM-1; i = i+1) begin
-            always @( posedge clk )begin
-                if (rst) begin
+            always @( posedge axis_clk )begin
+                if (axis_rst) begin
                     user_reg[i] <= 0;
                 end else if (slv_reg_wren_vec[i]) begin
                     user_reg[i] <= s_axis_tdata;
@@ -150,8 +153,8 @@ module axil_regfile_axis_wr #
         end
     endgenerate
 
-    always @( posedge clk ) begin
-        if ( rst ) begin
+    always @( posedge axil_clk ) begin
+        if ( axil_rst ) begin
             axi_bvalid  <= 0;
             axi_bresp   <= 2'b0;
         end 
@@ -165,8 +168,8 @@ module axil_regfile_axis_wr #
         end  
     end   
 
-    always @( posedge clk ) begin
-        if ( rst ) begin
+    always @( posedge axil_clk ) begin
+        if ( axil_rst ) begin
             axi_arready <= 1'b0;
             axi_araddr  <= 0;
         end else begin    
@@ -179,8 +182,8 @@ module axil_regfile_axis_wr #
         end 
     end
  
-    always @( posedge clk) begin
-        if ( rst ) begin
+    always @( posedge axil_clk) begin
+        if ( axil_rst ) begin
             axi_rvalid <= 0;
             axi_rresp  <= 0;
         end else begin
@@ -199,8 +202,8 @@ module axil_regfile_axis_wr #
     wire [DATA_WIDTH-1:0]    reg_data_out;
     assign reg_data_out = user_reg[axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB]];
 
-    always @( posedge clk) begin
-        if ( rst ) begin
+    always @( posedge axil_clk) begin
+        if ( axil_rst ) begin
             axi_rdata  <= 0;
         end else if (slv_reg_rden) begin
             axi_rdata <= reg_data_out;

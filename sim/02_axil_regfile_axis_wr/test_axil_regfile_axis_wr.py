@@ -32,10 +32,11 @@ class TB(object):
         self.log = logging.getLogger("cocotb.tb")
         self.log.setLevel(logging.DEBUG)
 
-        cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
+        cocotb.start_soon(Clock(dut.axil_clk, 10, units="ns").start())
+        cocotb.start_soon(Clock(dut.axis_clk, 10, units="ns").start())
 
-        self.axil_master = AxiLiteMaster(AxiLiteBus.from_prefix(dut, "s_axil"), dut.clk, dut.rst)
-        self.axis_input  = AxiStreamSource(AxiStreamBus.from_prefix(dut, "s_axis"), dut.clk, dut.rst)
+        self.axil_master = AxiLiteMaster(AxiLiteBus.from_prefix(dut, "s_axil"), dut.axil_clk, dut.axil_rst)
+        self.axis_input  = AxiStreamSource(AxiStreamBus.from_prefix(dut, "s_axis"), dut.axis_clk, dut.axis_rst)
 
 
     def set_idle_generator(self, generator=None):
@@ -50,23 +51,35 @@ class TB(object):
             self.axil_master.write_if.b_channel.set_pause_generator(generator())
             self.axil_master.read_if.r_channel.set_pause_generator(generator())
 
-    async def cycle_reset(self):
-        self.dut.rst.setimmediatevalue(0)
-        await RisingEdge(self.dut.clk)
-        await RisingEdge(self.dut.clk)
-        self.dut.rst.value = 1
-        await RisingEdge(self.dut.clk)
-        await RisingEdge(self.dut.clk)
-        self.dut.rst.value = 0
-        await RisingEdge(self.dut.clk)
-        await RisingEdge(self.dut.clk)
+    async def axil_cycle_reset(self):
+        self.dut.axil_rst.setimmediatevalue(0)
+        await RisingEdge(self.dut.axil_clk)
+        await RisingEdge(self.dut.axil_clk)
+        self.dut.axil_rst.value = 1
+        await RisingEdge(self.dut.axil_clk)
+        await RisingEdge(self.dut.axil_clk)
+        self.dut.axil_rst.value = 0
+        await RisingEdge(self.dut.axil_clk)
+        await RisingEdge(self.dut.axil_clk)
+
+    async def axis_cycle_reset(self):
+        self.dut.axis_rst.setimmediatevalue(0)
+        await RisingEdge(self.dut.axis_clk)
+        await RisingEdge(self.dut.axis_clk)
+        self.dut.axis_rst.value = 1
+        await RisingEdge(self.dut.axis_clk)
+        await RisingEdge(self.dut.axis_clk)
+        self.dut.axis_rst.value = 0
+        await RisingEdge(self.dut.axis_clk)
+        await RisingEdge(self.dut.axis_clk)
 
 @cocotb.test(timeout_time=50000, timeout_unit="ns")
 async def run_test_read(dut, data_in=None, idle_inserter=None, backpressure_inserter=None):
 
     tb = TB(dut)
     byte_lanes = tb.axil_master.write_if.byte_lanes
-    await tb.cycle_reset()
+    await tb.axil_cycle_reset()
+    await tb.axis_cycle_reset()
 
     tb.set_idle_generator(idle_inserter)
     tb.set_backpressure_generator(backpressure_inserter)
@@ -83,14 +96,14 @@ async def run_test_read(dut, data_in=None, idle_inserter=None, backpressure_inse
     await tb.axis_input.send(data_frame)
 
     for i in range(4):
-        await RisingEdge(dut.clk)
+        await RisingEdge(dut.axis_clk)
 
     data = await tb.axil_master.read(addr, length * byte_lanes)
 
     assert data.data == test_data
 
     for i in range(4):
-        await RisingEdge(dut.clk)
+        await RisingEdge(dut.axis_clk)
 
 
 def cycle_pause():
