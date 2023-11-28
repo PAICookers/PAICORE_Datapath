@@ -1,0 +1,48 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Tue Nov 28 02:52:43 2023
+[*]
+[dumpfile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/02_axil_regfile_axis_wr/axil_regfile_axis_wr.fst"
+[dumpfile_mtime] "Tue Nov 28 02:52:25 2023"
+[dumpfile_size] 212861
+[savefile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/02_axil_regfile_axis_wr/axil_regfile_axis_wr.gtkw"
+[timestart] 0
+[size] 1908 999
+[pos] 7392 -65
+*-21.684937 10700000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 214
+[signals_width] 190
+[sst_expanded] 1
+[sst_vpaned_height] 293
+@28
+axil_regfile_axis_wr.clk
+axil_regfile_axis_wr.rst
+@200
+-
+@28
+axil_regfile_axis_wr.s_axis_tready
+axil_regfile_axis_wr.s_axis_tvalid
+axil_regfile_axis_wr.s_axis_tlast
+@22
+axil_regfile_axis_wr.s_axis_tdata[63:0]
+@24
+axil_regfile_axis_wr.axis_wrAddr[31:0]
+axil_regfile_axis_wr.axi_reg_sel[1023:0]
+@25
+axil_regfile_axis_wr.axis_write_num[31:0]
+@200
+-
+@28
+axil_regfile_axis_wr.s_axil_arready
+axil_regfile_axis_wr.s_axil_arvalid
+@22
+axil_regfile_axis_wr.s_axil_araddr[31:0]
+@200
+-
+@28
+axil_regfile_axis_wr.s_axil_rready
+axil_regfile_axis_wr.s_axil_rvalid
+@22
+axil_regfile_axis_wr.s_axil_rdata[63:0]
+[pattern_trace] 1
+[pattern_trace] 0
