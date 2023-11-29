@@ -21,7 +21,7 @@ module axil_regfile_axis_wr_wrapper #
     input  wire                     s_axis_tlast,
     input  wire                     s_axis_tvalid,
 
-    output reg [31:0]               axis_write_num,
+    output wire [31:0]              axis_write_num,
 
     input  wire [ADDR_WIDTH-1:0]    s_axil_awaddr,
     input  wire [2:0]               s_axil_awprot,
