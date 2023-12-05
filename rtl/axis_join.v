@@ -1,7 +1,3 @@
-`resetall
-`timescale 1ns / 1ps
-`default_nettype none
-
 module axis_join #(
     parameter DATA_WD = 64
 )(
@@ -52,5 +48,3 @@ module axis_join #(
     assign m_axis_tvalid = C0_valid_reg ? C0_valid_reg : C1_valid_reg;
 
 endmodule
-
-`resetall

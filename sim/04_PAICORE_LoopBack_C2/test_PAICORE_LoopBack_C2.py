@@ -35,7 +35,7 @@ class TB(object):
         self.dut = dut
         cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
 
-        ports = 2
+        ports = 1
 
         self.source = [
             AxiStreamSource(
@@ -82,26 +82,21 @@ async def run_test(dut, idle_inserter=None, backpressure_inserter=None):
     tb.set_backpressure_generator(backpressure_inserter)
 
     for k in range(10):
-        length_C0 = random.randint(32, 64)
-        length_C1 = random.randint(32, 64)
-        # length_C0 = 10  # 数据个数
-        # length_C1 = 10  # 数据个数
-        tb.dut.send_len_C0.setimmediatevalue(length_C0)
-        tb.dut.send_len_C1.setimmediatevalue(length_C1)
-        tb.dut.oFrameNumMax.setimmediatevalue(length_C0 + length_C1 + 1)
+        length = random.randint(32, 64)
+        # length = 5  # 数据个数
+        if length % 2 == 1: ## 各通道平分数据，实际传输似可以用全0补齐
+            length += 1
+        tb.dut.send_len.setimmediatevalue(length)
+        tb.dut.oFrameNumMax.setimmediatevalue(length)
 
-        rand_data = random_int_list(0, 255, length_C0 * byte_lanes)
+        rand_data = random_int_list(0, 255, length * byte_lanes)
         test_data = bytearray(rand_data)
-        test_frame_C0 = AxiStreamFrame(test_data)
-        await tb.source[0].send(test_frame_C0)
+        test_frame = AxiStreamFrame(test_data)
+        await tb.source[0].send(test_frame)
 
-        rand_data = random_int_list(0, 255, length_C1 * byte_lanes)
-        test_data = bytearray(rand_data)
-        test_frame_C1 = AxiStreamFrame(test_data)
-        await tb.source[1].send(test_frame_C1)
 
         rx_frame = await tb.sink.recv()
-        inputFrames  = axisFrame2np(test_frame_C0.tdata + test_frame_C1.tdata)
+        inputFrames  = axisFrame2np(test_frame.tdata)
         outputFrames = axisFrame2np(rx_frame.tdata[: -1 * byte_lanes])
         inputFrames  = np.sort(inputFrames)
         outputFrames = np.sort(outputFrames)
