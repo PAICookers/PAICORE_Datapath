@@ -32,6 +32,7 @@ module PAICORE_regfile #
     input  [63:0]       write_data,
     input  [63:0]       read_data,
     output              DataPath_Reset_n,
+    output              multi_channel_enable,
 
     input  [31:0]       data_cnt,
     input  [31:0]       tlast_cnt,
@@ -146,10 +147,11 @@ module PAICORE_regfile #
 
     assign o_rx_rcving = (rx_state == `RX_STATE_RECEVING); // config by PS, to avoid interference caused by done signals during startup
 
-    assign send_len         = uesr_reg[12];
-    assign PAICORE_CTRL     = uesr_reg[13][2:0];
-    assign oFrameNumMax     = uesr_reg[14];
-    assign DataPath_Reset_n = uesr_reg[15][0];
+    assign send_len             = uesr_reg[12];
+    assign PAICORE_CTRL         = uesr_reg[13][2:0];
+    assign oFrameNumMax         = uesr_reg[14];
+    assign DataPath_Reset_n     = uesr_reg[15][0];
+    assign multi_channel_enable = uesr_reg[15][1];
     // wire cpu2fifo_plus = i_cpu2fifo_valid & i_cpu2fifo_ready; // debug_signals.
     // wire fifo2snn_plus = i_fifo2snn_valid & i_fifo2snn_ready; // debug_signals.
     // wire snn2fifo_plus = i_snn2fifo_valid & i_snn2fifo_ready; // debug_signals.

@@ -2,6 +2,7 @@ module PAICORE_send_2C(
     input               s_axis_aclk,
     input               s_axis_aresetn,
 
+    input               fork_enable,
     input      [31:0]   send_len,
     output     [31:0]   data_cnt,
     output     [31:0]   tlast_cnt,
@@ -86,6 +87,7 @@ module PAICORE_send_2C(
     ) u_axis_fork(
         .clk                (s_axis_aclk    ),
         .rst                (!s_axis_aresetn),
+        .fork_enable        (fork_enable    ),
         .s_axis_tvalid      (fifo_tvalid    ),
         .s_axis_tdata       (fifo_tdata     ),
         .s_axis_tready      (fifo_tready    ),

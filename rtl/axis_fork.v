@@ -4,6 +4,8 @@ module axis_fork #(
     input                       clk,
     input                       rst,
 
+    input                       fork_enable,
+
     input                       s_axis_tvalid,
     input  [DATA_WD-1 : 0]      s_axis_tdata,
     output                      s_axis_tready,
@@ -24,7 +26,7 @@ module axis_fork #(
     always @(posedge clk) begin
         if(rst) begin
             fork_flag <= 1'b0;
-        end else if(s_axis_tready && s_axis_tvalid) begin
+        end else if(s_axis_tready && s_axis_tvalid && fork_enable) begin
             fork_flag <= !fork_flag;
         end
     end

@@ -7,6 +7,7 @@ module PAICORE_LoopBack_C2
     input  wire                         clk,
     input  wire                         rst,
 
+    input  wire                         fork_enable,
     input  wire [31:0]                  send_len,
     output wire                         o_tx_done,
 
@@ -49,6 +50,7 @@ module PAICORE_LoopBack_C2
     PAICORE_send_2C u_PAICORE_send_2C(
         .s_axis_aclk        (clk            ),
         .s_axis_aresetn     (!rst           ),
+        .fork_enable        (fork_enable    ),
         .send_len           (send_len       ),
         .data_cnt           (),
         .tlast_cnt          (),

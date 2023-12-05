@@ -86,6 +86,7 @@ async def run_test(dut, idle_inserter=None, backpressure_inserter=None):
         # length = 5  # 数据个数
         if length % 2 == 1: ## 各通道平分数据，实际传输似可以用全0补齐
             length += 1
+        tb.dut.fork_enable.setimmediatevalue(1)
         tb.dut.send_len.setimmediatevalue(length)
         tb.dut.oFrameNumMax.setimmediatevalue(length)
 
