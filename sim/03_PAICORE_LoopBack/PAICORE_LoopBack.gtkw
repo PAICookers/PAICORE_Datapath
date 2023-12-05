@@ -1,0 +1,75 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Tue Dec  5 00:47:27 2023
+[*]
+[dumpfile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/03_PAICORE_LoopBack/PAICORE_LoopBack.fst"
+[dumpfile_mtime] "Tue Dec  5 00:47:04 2023"
+[dumpfile_size] 328087
+[savefile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/03_PAICORE_LoopBack/PAICORE_LoopBack.gtkw"
+[timestart] 0
+[size] 1456 567
+[pos] 250554 230947
+*-24.990463 74310001 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] PAICORE_LoopBack.
+[treeopen] PAICORE_LoopBack.u_PAICORE_recv.
+[treeopen] PAICORE_LoopBack.u_PAICORE_send.
+[sst_width] 214
+[signals_width] 230
+[sst_expanded] 1
+[sst_vpaned_height] 146
+@28
+PAICORE_LoopBack.clk
+PAICORE_LoopBack.rst
+@200
+-
+@28
+PAICORE_LoopBack.s_axis_tready
+PAICORE_LoopBack.s_axis_tvalid
+PAICORE_LoopBack.s_axis_tlast
+@22
+PAICORE_LoopBack.s_axis_tdata[63:0]
+@28
+PAICORE_LoopBack.u_PAICORE_send.o_tx_done
+PAICORE_LoopBack.tx_busy_done
+@200
+-
+@29
+PAICORE_LoopBack.u_PAICORE_recv.recver_available
+PAICORE_LoopBack.u_PAICORE_recv.recver_valid
+@23
+PAICORE_LoopBack.u_PAICORE_recv.recver_data[63:0]
+@200
+-
+@28
+PAICORE_LoopBack.u_PAICORE_recv.i_recv_busy
+PAICORE_LoopBack.u_PAICORE_recv.i_recv_done
+PAICORE_LoopBack.u_PAICORE_recv.tp_up_tready
+PAICORE_LoopBack.u_PAICORE_recv.tp_up_tvalid
+PAICORE_LoopBack.u_PAICORE_recv.tp_up_tlast
+@22
+PAICORE_LoopBack.u_PAICORE_recv.tp_up_tdata[63:0]
+@200
+-
+@28
+PAICORE_LoopBack.u_PAICORE_recv.padding_tready
+PAICORE_LoopBack.u_PAICORE_recv.padding_tvalid
+PAICORE_LoopBack.u_PAICORE_recv.padding_tlast
+@22
+PAICORE_LoopBack.u_PAICORE_recv.padding_tdata[63:0]
+@200
+-
+-
+@28
+PAICORE_LoopBack.m_axis_tready
+PAICORE_LoopBack.m_axis_tvalid
+PAICORE_LoopBack.m_axis_tlast
+@22
+PAICORE_LoopBack.m_axis_tdata[63:0]
+@200
+-
+-
+-
+-
+-
+[pattern_trace] 1
+[pattern_trace] 0

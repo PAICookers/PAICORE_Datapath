@@ -40,7 +40,7 @@ module axis_fifo_top #
         .USER_ENABLE            (0                  ),
         .USER_WIDTH             (1                  ),
         .RAM_PIPELINE           (1                  ),
-        .OUTPUT_FIFO_ENABLE     (0                  ),
+        .OUTPUT_FIFO_ENABLE     (1                  ),
         .FRAME_FIFO             (0                  ),
         .USER_BAD_FRAME_VALUE   (1'b1               ),
         .USER_BAD_FRAME_MASK    (1'b1               ),
