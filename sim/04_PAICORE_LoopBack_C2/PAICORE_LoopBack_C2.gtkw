@@ -1,0 +1,113 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Tue Dec  5 05:01:11 2023
+[*]
+[dumpfile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/04_PAICORE_LoopBack_C2/PAICORE_LoopBack_C2.fst"
+[dumpfile_mtime] "Tue Dec  5 05:00:38 2023"
+[dumpfile_size] 968144
+[savefile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/04_PAICORE_LoopBack_C2/PAICORE_LoopBack_C2.gtkw"
+[timestart] 0
+[size] 1201 598
+[pos] 11276 151
+*-26.850346 17140000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] PAICORE_LoopBack_C2.
+[treeopen] PAICORE_LoopBack_C2.u_PAICORE_recv_2C.
+[sst_width] 214
+[signals_width] 246
+[sst_expanded] 1
+[sst_vpaned_height] 152
+@28
+PAICORE_LoopBack_C2.clk
+PAICORE_LoopBack_C2.rst
+@200
+-
+@28
+PAICORE_LoopBack_C2.s00_axis_tlast
+PAICORE_LoopBack_C2.s00_axis_tready
+PAICORE_LoopBack_C2.s00_axis_tvalid
+@22
+PAICORE_LoopBack_C2.s00_axis_tdata[63:0]
+@200
+-
+@28
+PAICORE_LoopBack_C2.s01_axis_tready
+PAICORE_LoopBack_C2.s01_axis_tvalid
+PAICORE_LoopBack_C2.s01_axis_tlast
+@23
+PAICORE_LoopBack_C2.s01_axis_tdata[63:0]
+@200
+-
+@28
+PAICORE_LoopBack_C2.o_tx_done_C0
+PAICORE_LoopBack_C2.o_tx_done_C1
+PAICORE_LoopBack_C2.o_tx_done_reg[1:0]
+@200
+-
+@28
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.i_recv_busy
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.i_recv_done
+@200
+-
+@28
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.request_C0
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.acknowledge_C0
+@22
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.din_C0[31:0]
+@200
+-
+@28
+PAICORE_LoopBack_C2.clk
+@200
+-frame_join
+@28
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.u_axis_join.s00_axis_tready
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.u_axis_join.s00_axis_tvalid
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.u_axis_join.C0_valid_reg
+@22
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.u_axis_join.s00_axis_tdata[63:0]
+@200
+-
+@28
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.u_axis_join.s01_axis_tready
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.u_axis_join.s01_axis_tvalid
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.u_axis_join.C1_valid_reg
+@22
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.u_axis_join.s01_axis_tdata[63:0]
+@200
+-
+@28
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.mux_tready
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.mux_tvalid
+@22
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.mux_tdata[63:0]
+@200
+-
+@28
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.tp_up_tready
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.tp_up_tvalid
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.tp_up_tlast
+@22
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.tp_up_tdata[63:0]
+@200
+-
+@28
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.padding_tready
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.padding_tvalid
+@22
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.padding_tdata[63:0]
+@28
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.padding_tlast
+@24
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.u_axis_dataPadding.oFrameNumMax[31:0]
+PAICORE_LoopBack_C2.u_PAICORE_recv_2C.u_axis_dataPadding.data_cnt[31:0]
+@200
+-
+-
+-
+-
+-
+-
+-
+-
+[pattern_trace] 1
+[pattern_trace] 0
