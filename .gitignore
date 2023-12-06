@@ -5,3 +5,4 @@ sim_build/
 *.fst
 *.xml
 iverilog_dump.v
+*.log
