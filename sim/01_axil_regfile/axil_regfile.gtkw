@@ -1,10 +1,10 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Tue Nov 28 02:28:55 2023
+[*] Wed Dec  6 09:29:25 2023
 [*]
 [dumpfile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/01_axil_regfile/axil_regfile.fst"
-[dumpfile_mtime] "Tue Nov 28 02:20:26 2023"
-[dumpfile_size] 229170
+[dumpfile_mtime] "Wed Dec  6 09:29:16 2023"
+[dumpfile_size] 229670
 [savefile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/01_axil_regfile/axil_regfile.gtkw"
 [timestart] 0
 [size] 1000 467
@@ -21,6 +21,7 @@ axil_regfile.rst
 -
 @28
 axil_regfile.s_axil_arready
+@29
 axil_regfile.s_axil_arvalid
 @22
 axil_regfile.s_axil_araddr[31:0]
@@ -44,7 +45,6 @@ axil_regfile.s_axil_awaddr[31:0]
 -
 @28
 axil_regfile.s_axil_wready
-@29
 axil_regfile.s_axil_wvalid
 @22
 axil_regfile.s_axil_wdata[63:0]

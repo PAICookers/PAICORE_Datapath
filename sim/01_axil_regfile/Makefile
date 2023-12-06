@@ -30,7 +30,7 @@ export COCOTB_RESOLVE_X ?= RANDOM
 DUT      = axil_regfile
 TOPLEVEL = $(DUT)
 MODULE   = test_$(DUT)
-VERILOG_SOURCES += ../../rtl/$(DUT).v
+VERILOG_SOURCES += ../../rtl/regfile/$(DUT).v
 
 # module parameters
 export PARAM_DATA_WIDTH := 64
@@ -67,5 +67,6 @@ iverilog_dump.v:
 	echo 'endmodule' >> $@
 
 clean::
-	@rm -rf iverilog_dump.v
-	@rm -rf dump.fst $(TOPLEVEL).fst
+	@rm -rf iverilog_dump.v results.xml
+	@rm -rf *.fst
+	@rm -rf __pycache__

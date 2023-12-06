@@ -103,7 +103,7 @@ async def run_test_read(
 
     await tb.axis_input.send(data_frame)
 
-    for i in range(4):
+    for i in range(10):
         await RisingEdge(dut.axis_clk)
 
     data = await tb.axil_master.read(addr, length * byte_lanes)

@@ -30,7 +30,8 @@ COCOTB_HDL_TIMEPRECISION = 1ps
 DUT      = PAICORE_LoopBack
 TOPLEVEL = $(DUT)
 MODULE   = test_$(DUT)
-VERILOG_SOURCES += ../../rtl/*.v
+VERILOG_SOURCES += ../../rtl/axis_ip/*.v
+VERILOG_SOURCES += ../../rtl/PAICORE_IP/*.v
 VERILOG_SOURCES += ../tb_rtl/*.v
 
 COCOTB_PY_DIR = /home/anne/miniconda3/envs/HDL/bin/python
@@ -66,4 +67,5 @@ iverilog_dump.v:
 
 clean::
 	@rm -rf iverilog_dump.v results.xml
-	@rm -rf dump.fst $(TOPLEVEL).fst
+	@rm -rf *.fst
+	@rm -rf __pycache__
