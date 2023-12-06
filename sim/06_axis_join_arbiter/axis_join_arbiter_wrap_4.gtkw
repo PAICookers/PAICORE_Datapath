@@ -1,0 +1,75 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Wed Dec  6 08:51:18 2023
+[*]
+[dumpfile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/06_axis_join_arbiter/axis_join_arbiter_wrap_4.fst"
+[dumpfile_mtime] "Wed Dec  6 08:50:06 2023"
+[dumpfile_size] 4709
+[savefile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/06_axis_join_arbiter/axis_join_arbiter_wrap_4.gtkw"
+[timestart] 2277800
+[size] 1000 600
+[pos] 6962 90
+*-16.157413 2334400 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] axis_join_arbiter_wrap_4.
+[treeopen] axis_join_arbiter_wrap_4.axis_join_arbiter_inst.
+[sst_width] 214
+[signals_width] 190
+[sst_expanded] 1
+[sst_vpaned_height] 152
+@28
+axis_join_arbiter_wrap_4.clk
+axis_join_arbiter_wrap_4.rst
+@200
+-
+@28
+axis_join_arbiter_wrap_4.s00_axis_tready
+axis_join_arbiter_wrap_4.s00_axis_tvalid
+axis_join_arbiter_wrap_4.s00_axis_tlast
+@22
+axis_join_arbiter_wrap_4.s00_axis_tdata[63:0]
+@200
+-
+@28
+axis_join_arbiter_wrap_4.s01_axis_tready
+axis_join_arbiter_wrap_4.s01_axis_tvalid
+axis_join_arbiter_wrap_4.s01_axis_tlast
+@22
+axis_join_arbiter_wrap_4.s02_axis_tdata[63:0]
+@200
+-
+@28
+axis_join_arbiter_wrap_4.s02_axis_tready
+axis_join_arbiter_wrap_4.s02_axis_tvalid
+axis_join_arbiter_wrap_4.s02_axis_tlast
+@22
+axis_join_arbiter_wrap_4.s02_axis_tdata[63:0]
+@200
+-
+@28
+axis_join_arbiter_wrap_4.s03_axis_tready
+axis_join_arbiter_wrap_4.s03_axis_tvalid
+axis_join_arbiter_wrap_4.s03_axis_tlast
+@22
+axis_join_arbiter_wrap_4.s03_axis_tdata[63:0]
+@201
+-
+@28
+axis_join_arbiter_wrap_4.m_axis_tready
+axis_join_arbiter_wrap_4.m_axis_tvalid
+axis_join_arbiter_wrap_4.m_axis_tlast
+@22
+axis_join_arbiter_wrap_4.m_axis_tdata[63:0]
+@200
+-
+@28
+axis_join_arbiter_wrap_4.axis_join_arbiter_inst.s_axis_tvalid[3:0]
+axis_join_arbiter_wrap_4.axis_join_arbiter_inst.s_axis_tready[3:0]
+axis_join_arbiter_wrap_4.axis_join_arbiter_inst.gnt_shift[3:0]
+@22
+axis_join_arbiter_wrap_4.axis_join_arbiter_inst.tlast_flag[3:0]
+@200
+-
+-
+-
+[pattern_trace] 1
+[pattern_trace] 0

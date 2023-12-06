@@ -1,0 +1,69 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Wed Dec  6 08:57:27 2023
+[*]
+[dumpfile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/06_axis_join_arbiter/axis_join_arbiter_wrap_3.fst"
+[dumpfile_mtime] "Wed Dec  6 08:54:28 2023"
+[dumpfile_size] 317125
+[savefile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/06_axis_join_arbiter/axis_join_arbiter_wrap_3.gtkw"
+[timestart] 65879800
+[size] 1157 600
+[pos] 1713 60
+*-16.057142 66005200 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] axis_join_arbiter_wrap_3.
+[treeopen] axis_join_arbiter_wrap_3.axis_join_arbiter_inst.
+[treeopen] axis_join_arbiter_wrap_3.axis_join_arbiter_inst.genblk2.
+[sst_width] 214
+[signals_width] 190
+[sst_expanded] 1
+[sst_vpaned_height] 152
+@28
+axis_join_arbiter_wrap_3.clk
+axis_join_arbiter_wrap_3.rst
+@200
+-
+@28
+axis_join_arbiter_wrap_3.s00_axis_tready
+axis_join_arbiter_wrap_3.s00_axis_tvalid
+axis_join_arbiter_wrap_3.s00_axis_tlast
+@22
+axis_join_arbiter_wrap_3.s00_axis_tdata[63:0]
+@200
+-
+@28
+axis_join_arbiter_wrap_3.s01_axis_tready
+axis_join_arbiter_wrap_3.s01_axis_tvalid
+axis_join_arbiter_wrap_3.s01_axis_tlast
+@22
+axis_join_arbiter_wrap_3.s01_axis_tdata[63:0]
+@200
+-
+@28
+axis_join_arbiter_wrap_3.s02_axis_tready
+axis_join_arbiter_wrap_3.s02_axis_tvalid
+axis_join_arbiter_wrap_3.s02_axis_tlast
+@22
+axis_join_arbiter_wrap_3.s02_axis_tdata[63:0]
+@200
+-
+@28
+axis_join_arbiter_wrap_3.m_axis_tready
+axis_join_arbiter_wrap_3.m_axis_tvalid
+@29
+axis_join_arbiter_wrap_3.m_axis_tlast
+@22
+axis_join_arbiter_wrap_3.m_axis_tdata[63:0]
+@200
+-
+@28
+axis_join_arbiter_wrap_3.axis_join_arbiter_inst.genblk2.u_Round_Robin_arbiter.request[2:0]
+axis_join_arbiter_wrap_3.axis_join_arbiter_inst.genblk2.u_Round_Robin_arbiter.grant[2:0]
+@200
+-
+-
+-
+-
+-
+-
+[pattern_trace] 1
+[pattern_trace] 0
