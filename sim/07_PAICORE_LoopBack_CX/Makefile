@@ -20,8 +20,6 @@
 
 TOPLEVEL_LANG = verilog
 
-export PORTS ?= 4
-
 SIM ?= icarus
 # SIM ?= questa
 WAVES ?= 1
@@ -29,10 +27,12 @@ WAVES ?= 1
 COCOTB_HDL_TIMEUNIT = 1ns
 COCOTB_HDL_TIMEPRECISION = 1ps
 
-DUT      = axis_fork_arbiter
-TOPLEVEL = $(DUT)_wrap_$(PORTS)
+DUT      = PAICORE_LoopBack_CX
+TOPLEVEL = $(DUT)
 MODULE   = test_$(DUT)
 VERILOG_SOURCES += ../../rtl/axis_ip/*.v
+VERILOG_SOURCES += ../../rtl/PAICORE_IP/*.v
+VERILOG_SOURCES += ../tb_rtl/*.v
 
 COCOTB_PY_DIR = /home/anne/miniconda3/envs/HDL/bin/python
 
@@ -67,5 +67,4 @@ iverilog_dump.v:
 
 clean::
 	@rm -rf iverilog_dump.v results.xml
-	@rm -rf *.fst *.log
-	@rm -rf __pycache__
+	@rm -rf dump.fst $(TOPLEVEL).fst

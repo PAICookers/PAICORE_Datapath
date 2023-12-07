@@ -27,24 +27,22 @@ module transport_up(
     assign m_axis_hsked  = m_axis_tready && m_axis_tvalid;
 
     // 1. get real done: 
-    reg     [5: 0]      done_count;
+    reg     [31: 0]     done_count;
     reg                 real_done, real_done_delay;
     wire                real_done_pluse;
 
     always @(posedge s_axis_aclk or negedge s_axis_aresetn) begin
         if(~s_axis_aresetn) begin
-            done_count  <= 6'b0;
+            done_count  <= 'b0;
             real_done   <= 1'b0;
         end else if(i_recv_done && !i_recv_busy) begin                   
-            if(~&done_count) begin         // only judge 16 cycles, hold on 15 when exceed
-                done_count  <= done_count + 1;
-                if(done_count >= 60)
-                    real_done   <= 1'b1;
-                else
-                    real_done   <= 1'b0;
-            end
+            done_count  <= done_count + 1;
+            if(done_count >= 100)
+                real_done   <= 1'b1;
+            else
+                real_done   <= 1'b0;
         end else begin
-            done_count  <= 6'b0;
+            done_count  <= 'b0;
             real_done   <= 1'b0;
         end
     end

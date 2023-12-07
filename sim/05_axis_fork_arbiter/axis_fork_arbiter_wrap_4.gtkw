@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Wed Dec  6 07:41:52 2023
+[*] Thu Dec  7 01:34:19 2023
 [*]
 [dumpfile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/05_axis_fork_arbiter/axis_fork_arbiter_wrap_4.fst"
-[dumpfile_mtime] "Wed Dec  6 07:39:38 2023"
-[dumpfile_size] 84081
+[dumpfile_mtime] "Thu Dec  7 01:33:39 2023"
+[dumpfile_size] 2566885
 [savefile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/05_axis_fork_arbiter/axis_fork_arbiter_wrap_4.gtkw"
-[timestart] 0
+[timestart] 16012900
 [size] 1391 592
-[pos] 149627 131161
-*-19.477961 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] 183972 164083
+*-14.477961 16064200 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] axis_fork_arbiter_wrap_4.
 [treeopen] axis_fork_arbiter_wrap_4.axis_fork_arbiter_inst.
 [sst_width] 214
@@ -26,22 +26,21 @@ axis_fork_arbiter_wrap_4.fork_enable
 axis_fork_arbiter_wrap_4.fork_done
 @200
 -
-@22
-axis_fork_arbiter_wrap_4.s_axis_tdata[63:0]
 @28
 axis_fork_arbiter_wrap_4.s_axis_tready
 axis_fork_arbiter_wrap_4.s_axis_tvalid
+axis_fork_arbiter_wrap_4.s_axis_tlast
+@22
+axis_fork_arbiter_wrap_4.s_axis_tdata[63:0]
 @200
 -
 @28
 axis_fork_arbiter_wrap_4.axis_fork_arbiter_inst.fork_done_reg
-@200
+@201
 -
 @28
 axis_fork_arbiter_wrap_4.m00_axis_tready
-@29
 axis_fork_arbiter_wrap_4.m00_axis_tvalid
-@28
 axis_fork_arbiter_wrap_4.m00_axis_tlast
 @22
 axis_fork_arbiter_wrap_4.m00_axis_tdata[63:0]

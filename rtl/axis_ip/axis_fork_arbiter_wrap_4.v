@@ -14,7 +14,7 @@ module axis_fork_arbiter_wrap_4 #
     input  wire                     rst,
                  
     input                           fork_enable,
-    output                          fork_done,
+
     /*
      * AXI Stream input
      */
@@ -55,7 +55,7 @@ axis_fork_arbiter_inst (
     .clk(clk),
     .rst(rst),
     .fork_enable(fork_enable),
-    .fork_done(fork_done),
+
     // AXI input
     .s_axis_tready(s_axis_tready),                 
     .s_axis_tdata(s_axis_tdata),

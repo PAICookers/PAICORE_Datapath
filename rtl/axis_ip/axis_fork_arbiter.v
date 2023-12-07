@@ -6,7 +6,6 @@ module axis_fork_arbiter #(
     input                                   rst,
 
     input                                   fork_enable,
-    output                                  fork_done,
 
     output wire                             s_axis_tready,
     input  wire [DATA_WIDTH-1:0]            s_axis_tdata,
@@ -17,7 +16,6 @@ module axis_fork_arbiter #(
     output wire [M_COUNT*DATA_WIDTH-1:0]    m_axis_tdata,
     output wire [M_COUNT-1:0]               m_axis_tlast,
     output wire [M_COUNT-1:0]               m_axis_tvalid
-    
 );
 
     wire [M_COUNT-1:0] grant_out;
@@ -46,11 +44,12 @@ module axis_fork_arbiter #(
         end
     endgenerate
 
+    wire fork_done;
     reg fork_done_reg;
     always @(posedge clk) begin
         if(rst) begin
             fork_done_reg   <= 1'b0;
-        end else if(fork_done_reg && (&(m_axis_tready & m_axis_tvalid))) begin                   
+        end else if(fork_done_reg && (&(m_axis_tready & m_axis_tvalid) )) begin                   
             fork_done_reg   <= 1'b0;
         end else if(s_axis_tready && s_axis_tvalid && s_axis_tlast) begin                   
             fork_done_reg   <= 1'b1;

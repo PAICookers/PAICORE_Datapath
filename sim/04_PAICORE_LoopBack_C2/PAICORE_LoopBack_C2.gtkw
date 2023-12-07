@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Tue Dec  5 08:03:52 2023
+[*] Thu Dec  7 02:37:32 2023
 [*]
 [dumpfile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/04_PAICORE_LoopBack_C2/PAICORE_LoopBack_C2.fst"
-[dumpfile_mtime] "Tue Dec  5 08:03:34 2023"
-[dumpfile_size] 34260
+[dumpfile_mtime] "Thu Dec  7 02:36:34 2023"
+[dumpfile_size] 496497
 [savefile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/04_PAICORE_LoopBack_C2/PAICORE_LoopBack_C2.gtkw"
-[timestart] 1201200
+[timestart] 0
 [size] 1201 596
-[pos] 23652 155
-*-16.818996 414000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] 25042 125
+*-20.818996 5558000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] PAICORE_LoopBack_C2.
 [treeopen] PAICORE_LoopBack_C2.u_PAICORE_send_2C.
 [treeopen] PAICORE_LoopBack_C2.u_PAICORE_send_2C.u_fork_send_C1.
@@ -44,11 +44,14 @@ PAICORE_LoopBack_C2.u_PAICORE_send_2C.u_axis_fork.m01_axis_tready
 PAICORE_LoopBack_C2.u_PAICORE_send_2C.u_axis_fork.m01_axis_tvalid
 @22
 PAICORE_LoopBack_C2.u_PAICORE_send_2C.u_axis_fork.m01_axis_tdata[63:0]
-@29
+@28
 PAICORE_LoopBack_C2.u_PAICORE_send_2C.u_fork_send_C1.u_axis_gen_last.m_axis_tlast
 @200
 -
+@29
+PAICORE_LoopBack_C2.o_tx_done
 @28
+PAICORE_LoopBack_C2.o_rx_done
 PAICORE_LoopBack_C2.u_PAICORE_recv_2C.i_recv_busy
 PAICORE_LoopBack_C2.u_PAICORE_recv_2C.i_recv_done
 @200
