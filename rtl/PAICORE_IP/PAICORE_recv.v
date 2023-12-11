@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module PAICORE_recv(
     input               m_axis_aclk,
     input               m_axis_aresetn,

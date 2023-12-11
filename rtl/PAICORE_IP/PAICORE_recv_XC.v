@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module PAICORE_recv_XC#(
     parameter Channel = 4,
     parameter DATA_WIDTH = 64
@@ -6,6 +7,10 @@ module PAICORE_recv_XC#(
     input                       m_axis_aresetn,
 
     input  [31:0]               oFrameNumMax,
+
+    output                      read_hsked,
+    output   [63:0]             read_data,
+    output                      snn_out_hsked,
 
     output [Channel-1:0]        acknowledge,
     input  [Channel*32-1:0]     din,
@@ -83,7 +88,7 @@ module PAICORE_recv_XC#(
         .m_axis_tdata    (tp_up_tdata           ),
         .m_axis_tlast    (tp_up_tlast           ),
         .m_axis_tvalid   (tp_up_tvalid          ),
-        .m_axis_hsked    (                      ),
+        .m_axis_hsked    (snn_out_hsked         ),
         .i_rx_rcving     (i_rx_rcving           ),
         .o_rx_done       (o_rx_done             )
     );
@@ -101,8 +106,8 @@ module PAICORE_recv_XC#(
         .m_axis_tdata    (padding_tdata         ),
         .m_axis_tlast    (padding_tlast         ),
         .m_axis_tvalid   (padding_tvalid        ),
-        .m_axis_hsked    (                      ),
-        .read_data       (                      )
+        .m_axis_hsked    (read_hsked            ),
+        .read_data       (read_data             )
     );
 
     axis_fifo_top #(

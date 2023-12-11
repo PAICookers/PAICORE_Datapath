@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module PAICORE_send(
     input               s_axis_aclk,
     input               s_axis_aresetn,

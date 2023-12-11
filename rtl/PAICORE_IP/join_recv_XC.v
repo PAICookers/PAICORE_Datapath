@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module join_recv_XC#(
     parameter Channel = 4
 )(
