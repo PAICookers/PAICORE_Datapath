@@ -5,6 +5,7 @@
 /*
  * AXI4-Stream 4 port fork arbiter mux (wrapper)
  */
+ `timescale 1ns / 1ps
 module axis_fork_arbiter_wrap_4 #
 (
     parameter DATA_WIDTH = 64
@@ -14,7 +15,7 @@ module axis_fork_arbiter_wrap_4 #
     input  wire                     rst,
                  
     input                           fork_enable,
-
+    input  wire [4-1:0]         single_mask,
     /*
      * AXI Stream input
      */
@@ -55,6 +56,7 @@ axis_fork_arbiter_inst (
     .clk(clk),
     .rst(rst),
     .fork_enable(fork_enable),
+    .single_mask(single_mask),
 
     // AXI input
     .s_axis_tready(s_axis_tready),                 

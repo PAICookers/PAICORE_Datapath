@@ -21,15 +21,18 @@
 //     assign grant = arb_enable ? grant_reg : 4'b0001;
 
 // endmodule
-
+`timescale 1ns / 1ps
 // parameterization
 module Fixed_arbiter#(
     parameter NUM_REQ = 4
 )(
     input                   arb_enable,
+    input  [NUM_REQ-1:0]    single_mask,
     input  [NUM_REQ-1:0]    request,
     output [NUM_REQ-1:0]    grant,
-    output [NUM_REQ-1:0]    pre_req
+    /* verilator lint_off UNOPTFLAT */
+    output [NUM_REQ-1:0]    pre_req 
+    /* verilator lint_on UNOPTFLAT */
 );
     wire [NUM_REQ-1:0] grant_full;
     // // method 1
@@ -51,25 +54,6 @@ module Fixed_arbiter#(
     // // request bitwise and its 2's complement, can get the lowest request bit.
     // assign grant_full = request & (~(request-1));
 
-    assign grant = (!arb_enable) ? (request[0] ? {NUM_REQ{1'b0}} + 1'b1 : {NUM_REQ{1'b0}}) : grant_full;
+    assign grant = (!arb_enable) ? ((|(single_mask & request)) ? single_mask : {NUM_REQ{1'b0}}) : grant_full;
 
 endmodule
-
-// input base priority
-module Fixed_arbiter_base#(
-    parameter NUM_REQ = 4
-)(
-    input                   arb_enable,
-    input  [NUM_REQ-1:0]    base,
-    input  [NUM_REQ-1:0]    request,
-    output [NUM_REQ-1:0]    grant
-);
-    
-    wire [2*NUM_REQ-1:0] double_req = {request,request};
-    wire [2*NUM_REQ-1:0] double_gnt = double_req & ~(double_req - base);
-    wire [NUM_REQ-1:0] grant_full;
-    assign grant_full = double_gnt[NUM_REQ-1:0] | double_gnt[2*NUM_REQ-1:NUM_REQ];
-    assign grant = (!arb_enable) ? (request[0] ? {NUM_REQ{1'b0}} + 1'b1 : {NUM_REQ{1'b0}}) : grant_full;
-
-endmodule
-

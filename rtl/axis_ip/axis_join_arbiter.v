@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module axis_join_arbiter #(
     parameter S_COUNT = 4,
     parameter DATA_WIDTH = 64
@@ -31,13 +32,17 @@ module axis_join_arbiter #(
     wire [S_COUNT-1:0] grant_out;
     parameter Use_Fixed = 0;
     generate
-        if (Use_Fixed) begin
+        if (S_COUNT == 1) begin
+            assign grant_out = 1'b1;
+        end else if (Use_Fixed) begin
             Fixed_arbiter #(
                 .NUM_REQ    (S_COUNT                                    )
             ) u_Fixed_arbiter(
                 .arb_enable (1'b1                                       ),
+                .single_mask({S_COUNT{1'b0}}                            ),
                 .request    (s_axis_tvalid & {S_COUNT{m_axis_tready}}   ),
-                .grant      (s_axis_tready                              )
+                .grant      (s_axis_tready                              ),
+                .pre_req    (                                           )
             );
         end else begin
             Round_Robin_arbiter #(
@@ -46,6 +51,7 @@ module axis_join_arbiter #(
                 .clk        (clk                                        ),
                 .rst_n      (!rst                                       ),
                 .arb_enable (1'b1                                       ),
+                .single_mask({S_COUNT{1'b0}}                            ),
                 .request    (s_axis_tvalid & {S_COUNT{m_axis_tready}}   ),
                 .grant      (s_axis_tready                              )
             );

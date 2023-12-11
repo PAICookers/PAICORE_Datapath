@@ -101,7 +101,8 @@ async def run_test(dut, idle_inserter=None, backpressure_inserter=None):
 
     # if not fork_enable, then only first channel can send data
     tb.dut.fork_enable.setimmediatevalue(1)
-
+    tb.dut.single_mask.setimmediatevalue(0b001)
+    
     tb.set_idle_generator(idle_inserter)
     tb.set_backpressure_generator(backpressure_inserter)
 

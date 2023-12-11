@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module axis_dataPadding(
     input               s_axis_aclk,
     input               s_axis_aresetn,

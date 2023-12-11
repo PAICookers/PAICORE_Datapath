@@ -1,41 +1,11 @@
-module Round_Robin_arbiter_base#(
-    parameter NUM_REQ = 4
-)(
-    input                   clk,
-    input                   rst_n,
-    input                   arb_enable,
-    input  [NUM_REQ-1:0]    request,
-    output [NUM_REQ-1:0]    grant
-);
-
-    reg [NUM_REQ-1:0]   hist_req;
-
-    always @(posedge clk) begin
-        if(!rst_n) begin
-            hist_req <= {{NUM_REQ-1{1'b0}}, 1'b1};
-        end else if(|request) begin
-            hist_req <= {grant[NUM_REQ-2:0], grant[NUM_REQ-1]};
-        end
-    end
-
-    Fixed_arbiter_base #(
-        .NUM_REQ    (NUM_REQ    )
-    ) u_Fixed_arbiter_base(
-        .arb_enable (arb_enable ),
-        .base       (hist_req     ),
-        .request    (request    ),
-        .grant      (grant      )
-    );
-
-endmodule
-
-
+`timescale 1ns / 1ps
 module Round_Robin_arbiter#(
     parameter NUM_REQ = 4
 )(
     input                   clk,
     input                   rst_n,
     input                   arb_enable,
+    input  [NUM_REQ-1:0]    single_mask,
     input  [NUM_REQ-1:0]    request,
     output [NUM_REQ-1:0]    grant
 );
@@ -57,6 +27,7 @@ module Round_Robin_arbiter#(
         .NUM_REQ    (NUM_REQ)
     ) u_grant_masked(
         .arb_enable (1'b1                   ),
+        .single_mask({NUM_REQ{1'b0}}        ),
         .request    (req_masked             ),
         .grant      (grant_masked           ),
         .pre_req    (mask_higher_pri_reqs   )
@@ -67,6 +38,7 @@ module Round_Robin_arbiter#(
         .NUM_REQ    (NUM_REQ)
     ) u_grant_unmasked(
         .arb_enable (1'b1                   ),
+        .single_mask({NUM_REQ{1'b0}}        ),
         .request    (request                ),
         .grant      (grant_unmasked         ),
         .pre_req    (unmask_higher_pri_reqs )
@@ -89,6 +61,6 @@ module Round_Robin_arbiter#(
         end
     end
 
-    assign grant = (!arb_enable) ? (request[0] ? {NUM_REQ{1'b0}} + 1'b1 : {NUM_REQ{1'b0}}) : grant_full;
+    assign grant = (!arb_enable) ? ((|(single_mask & request)) ? single_mask : {NUM_REQ{1'b0}}) : grant_full;
 
 endmodule

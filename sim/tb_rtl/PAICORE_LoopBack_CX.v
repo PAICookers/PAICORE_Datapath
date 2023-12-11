@@ -1,11 +1,13 @@
+`timescale 1ns / 1ps
 module PAICORE_LoopBack_CX#(
-    parameter Channel = 16,
+    parameter Channel = 2,
     parameter DATA_WIDTH = 64
 )(
     input  wire                         clk,
     input  wire                         rst,
 
-    input  wire                         fork_enable,
+    input  wire                         single_channel,
+    input  wire [Channel-1:0]           single_channel_mask,
     input  wire [31:0]                  send_len,
     output wire                         o_tx_done,
 
@@ -42,21 +44,29 @@ module PAICORE_LoopBack_CX#(
     end
     
     PAICORE_send_XC #(
-        .Channel            (Channel        ),
-        .DATA_WIDTH         (DATA_WIDTH     )
+        .Channel            (Channel            ),
+        .DATA_WIDTH         (DATA_WIDTH         )
     ) u_PAICORE_send_XC(
-        .s_axis_aclk        (clk            ),
-        .s_axis_aresetn     (!rst           ),
-        .fork_enable        (fork_enable    ),
-        .send_len           (send_len       ),
-        .s_axis_tready      (s_axis_tready  ),
-        .s_axis_tdata       (s_axis_tdata   ),
-        .s_axis_tlast       (s_axis_tlast   ),
-        .s_axis_tvalid      (s_axis_tvalid  ),
-        .acknowledge        (acknowledge    ),
-        .dout               (dout           ),
-        .request            (request        ),
-        .o_tx_done          (o_tx_done      )
+        .s_axis_aclk        (clk                ),
+        .s_axis_aresetn     (!rst               ),
+        .single_channel     (single_channel     ),
+        .single_channel_mask(single_channel_mask),
+        .send_len           (send_len           ),
+        
+        .data_cnt           (                   ),
+        .tlast_cnt          (                   ),
+        .write_hsked        (                   ),
+        .write_data         (                   ),
+        .snn_in_hsked       (                   ),
+
+        .s_axis_tready      (s_axis_tready      ),
+        .s_axis_tdata       (s_axis_tdata       ),
+        .s_axis_tlast       (s_axis_tlast       ),
+        .s_axis_tvalid      (s_axis_tvalid      ),
+        .acknowledge        (acknowledge        ),
+        .dout               (dout               ),
+        .request            (request            ),
+        .o_tx_done          (o_tx_done          )
     );
 
     PAICORE_recv_XC #(
@@ -66,6 +76,11 @@ module PAICORE_LoopBack_CX#(
         .m_axis_aclk        (clk            ),
         .m_axis_aresetn     (!rst           ),
         .oFrameNumMax       (oFrameNumMax   ),
+
+        .read_hsked         (               ),
+        .read_data          (               ),
+        .snn_out_hsked      (               ),
+
         .acknowledge        (acknowledge    ),
         .din                (dout           ),
         .request            (request        ),

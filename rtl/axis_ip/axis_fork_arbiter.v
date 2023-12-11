@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module axis_fork_arbiter #(
     parameter M_COUNT = 4,
     parameter DATA_WIDTH = 64
@@ -6,6 +7,7 @@ module axis_fork_arbiter #(
     input                                   rst,
 
     input                                   fork_enable,
+    input  wire [M_COUNT-1:0]               single_mask,
 
     output wire                             s_axis_tready,
     input  wire [DATA_WIDTH-1:0]            s_axis_tdata,
@@ -20,16 +22,20 @@ module axis_fork_arbiter #(
 
     wire [M_COUNT-1:0] grant_out;
 
-    parameter Use_Fixed = 0;
+    localparam Use_Fixed = 0;
 
     generate
-        if (Use_Fixed) begin
+        if (M_COUNT == 1) begin
+            assign grant_out = 1'b1;
+        end else if (Use_Fixed) begin
             Fixed_arbiter #(
                 .NUM_REQ    (M_COUNT)
             ) u_Fixed_arbiter(
                 .arb_enable (fork_enable    ),
+                .single_mask(single_mask    ),
                 .request    (m_axis_tready  ),
-                .grant      (grant_out      )
+                .grant      (grant_out      ),
+                .pre_req    (               )
             );
         end else begin
             Round_Robin_arbiter #(
@@ -38,6 +44,7 @@ module axis_fork_arbiter #(
                 .clk        (clk            ),
                 .rst_n      (!rst           ),
                 .arb_enable (fork_enable    ),
+                .single_mask(single_mask    ),
                 .request    (m_axis_tready  ),
                 .grant      (grant_out      )
             );

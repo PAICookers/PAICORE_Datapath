@@ -1,42 +1,29 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Thu Dec  7 06:53:32 2023
+[*] Mon Dec 11 02:58:19 2023
 [*]
 [dumpfile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/07_PAICORE_LoopBack_CX/PAICORE_LoopBack_CX.fst"
-[dumpfile_mtime] "Thu Dec  7 06:46:22 2023"
-[dumpfile_size] 344127
+[dumpfile_mtime] "Mon Dec 11 02:53:56 2023"
+[dumpfile_size] 9462
 [savefile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/07_PAICORE_LoopBack_CX/PAICORE_LoopBack_CX.gtkw"
-[timestart] 39183300
-[size] 1487 674
-[pos] 63322 32914
-*-15.935431 39330002 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[timestart] 0
+[size] 1487 618
+[pos] 97644 65886
+*-17.935431 680000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] PAICORE_LoopBack_CX.
 [treeopen] PAICORE_LoopBack_CX.u_PAICORE_recv_XC.
 [treeopen] PAICORE_LoopBack_CX.u_PAICORE_recv_XC.u_join_recv_XC.genblk1[0].
 [treeopen] PAICORE_LoopBack_CX.u_PAICORE_recv_XC.u_join_recv_XC.genblk1[1].
-[treeopen] PAICORE_LoopBack_CX.u_PAICORE_recv_XC.u_join_recv_XC.genblk1[2].
-[treeopen] PAICORE_LoopBack_CX.u_PAICORE_recv_XC.u_join_recv_XC.genblk1[3].
 [treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.
-[treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_axis_fork_arbiter.genblk2.
+[treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_axis_fork_arbiter.
+[treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_axis_fork_arbiter.genblk4.
 [treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.
 [treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[0].
-[treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[10].
-[treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[11].
-[treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[12].
-[treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[13].
 [treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[1].
-[treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[2].
-[treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[3].
-[treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[4].
-[treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[5].
-[treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[6].
-[treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[7].
-[treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[8].
-[treeopen] PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[9].
 [sst_width] 274
 [signals_width] 182
 [sst_expanded] 1
-[sst_vpaned_height] 176
+[sst_vpaned_height] 170
 @28
 PAICORE_LoopBack_CX.clk
 PAICORE_LoopBack_CX.rst
@@ -44,8 +31,6 @@ PAICORE_LoopBack_CX.rst
 -
 @24
 PAICORE_LoopBack_CX.send_len[31:0]
-@28
-PAICORE_LoopBack_CX.fork_enable
 @200
 -
 @28
@@ -56,7 +41,7 @@ PAICORE_LoopBack_CX.u_PAICORE_recv_XC.u_transport_up.i_recv_busy
 PAICORE_LoopBack_CX.u_PAICORE_recv_XC.u_transport_up.i_recv_done
 @200
 -
-@25
+@24
 PAICORE_LoopBack_CX.u_PAICORE_recv_XC.u_transport_up.done_count[31:0]
 @28
 PAICORE_LoopBack_CX.u_PAICORE_recv_XC.u_transport_up.real_done
@@ -71,39 +56,24 @@ PAICORE_LoopBack_CX.s_axis_tlast
 PAICORE_LoopBack_CX.s_axis_tdata[63:0]
 @200
 -
-@22
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_axis_fork_arbiter.genblk2.u_Round_Robin_arbiter.request[13:0]
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_axis_fork_arbiter.genblk2.u_Round_Robin_arbiter.grant[13:0]
-@200
--
--
--send_fork
-@24
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[2].u_axis_fifo_top.s_axis_tdata[63:0]
-@200
 -
 @28
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[9].u_axis_fifo_top.s_axis_tvalid
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[10].u_axis_fifo_top.s_axis_tvalid
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[11].u_axis_fifo_top.s_axis_tvalid
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[12].u_axis_fifo_top.s_axis_tvalid
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[13].u_axis_fifo_top.s_axis_tvalid
+PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_axis_fork_arbiter.genblk4.u_Round_Robin_arbiter.request[1:0]
+@29
+PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_axis_fork_arbiter.genblk4.u_Round_Robin_arbiter.single_mask[1:0]
+@28
+PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_axis_fork_arbiter.fork_enable
+PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_axis_fork_arbiter.grant_out[1:0]
 @200
 -
+-send_fork
 @28
 PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[0].u_axis_fifo_top.s_axis_tvalid
 PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[1].u_axis_fifo_top.s_axis_tvalid
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[2].u_axis_fifo_top.s_axis_tvalid
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[3].u_axis_fifo_top.s_axis_tvalid
 @200
 -
-@28
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[4].u_axis_fifo_top.s_axis_tvalid
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[5].u_axis_fifo_top.s_axis_tvalid
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[6].u_axis_fifo_top.s_axis_tvalid
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[7].u_axis_fifo_top.s_axis_tvalid
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[8].u_axis_fifo_top.s_axis_tvalid
-@200
+-
+-
 -
 -
 -
@@ -111,10 +81,6 @@ PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[8].u_axis_fifo_top.
 PAICORE_LoopBack_CX.clk
 @200
 -sender
-@28
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[3].u_axis_fifo_top.m_axis_tready
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[3].u_axis_fifo_top.m_axis_tvalid
-@200
 -
 @28
 PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[0].u_axis_fifo_top.m_axis_tready
@@ -126,10 +92,6 @@ PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[1].u_axis_fifo_top.
 PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[1].u_axis_fifo_top.m_axis_tvalid
 @200
 -
-@28
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[2].u_axis_fifo_top.m_axis_tready
-PAICORE_LoopBack_CX.u_PAICORE_send_XC.u_fork_send_XC.genblk1[2].u_axis_fifo_top.m_axis_tvalid
-@200
 -
 @28
 PAICORE_LoopBack_CX.u_PAICORE_recv_XC.u_axis_dataPadding.s_axis_aclk

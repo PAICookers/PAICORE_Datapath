@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module PAICORE_send_XC#(
     parameter Channel = 4,
     parameter DATA_WIDTH = 64
@@ -5,11 +6,19 @@ module PAICORE_send_XC#(
     input                           s_axis_aclk,
     input                           s_axis_aresetn,
 
-    input                           fork_enable,
-    input      [31:0]               send_len,
+    input                           single_channel,
+    input  [Channel-1:0]            single_channel_mask,
+    input  [31:0]                   send_len,
+
+    output [31:0]                   data_cnt,
+    output [31:0]                   tlast_cnt,
+
+    output                          write_hsked,
+    output [63:0]                   write_data,
+    output                          snn_in_hsked,
 
     output                          s_axis_tready,
-    input      [DATA_WIDTH-1:0]     s_axis_tdata,
+    input [DATA_WIDTH-1:0]          s_axis_tdata,
     input                           s_axis_tlast,
     input                           s_axis_tvalid,
 
@@ -34,6 +43,8 @@ module PAICORE_send_XC#(
         .s_axis_aclk        (s_axis_aclk        ),
         .s_axis_aresetn     (s_axis_aresetn     ),
         .send_len           (send_len           ),
+        .data_cnt           (data_cnt           ),
+        .tlast_cnt          (tlast_cnt          ),        
         .s_axis_tready      (s_axis_tready      ),
         .s_axis_tdata       (s_axis_tdata       ),
         .s_axis_tlast       (s_axis_tlast       ),
@@ -41,7 +52,9 @@ module PAICORE_send_XC#(
         .m_axis_tready      (gen_last_tready    ),
         .m_axis_tdata       (gen_last_tdata     ),
         .m_axis_tlast       (gen_last_tlast     ),
-        .m_axis_tvalid      (gen_last_tvalid    )
+        .m_axis_tvalid      (gen_last_tvalid    ),
+        .s_axis_hsked       (write_hsked        ),
+        .write_data         (write_data         ) 
     );
 
     axis_fork_arbiter #(
@@ -50,7 +63,8 @@ module PAICORE_send_XC#(
     )u_axis_fork_arbiter(
         .clk                (s_axis_aclk        ),
         .rst                (!s_axis_aresetn    ),
-        .fork_enable        (fork_enable        ),
+        .fork_enable        (!single_channel    ),
+        .single_mask        (single_channel_mask),
         .s_axis_tready      (gen_last_tready    ),
         .s_axis_tdata       (gen_last_tdata     ),
         .s_axis_tlast       (gen_last_tlast     ),

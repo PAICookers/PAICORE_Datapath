@@ -86,7 +86,8 @@ async def run_simple_test(dut, idle_inserter=None, backpressure_inserter=None):
     for k in range(10):
         # length = random.randint(32, 64)
         length = 64 # 数据个数
-        tb.dut.fork_enable.setimmediatevalue(1)
+        tb.dut.single_channel.setimmediatevalue(0)
+        tb.dut.single_channel_mask.setimmediatevalue(0b0001)
         tb.dut.send_len.setimmediatevalue(length)
 
         await RisingEdge(dut.clk) # oFrameNumMax change slowly, or it will be wrong

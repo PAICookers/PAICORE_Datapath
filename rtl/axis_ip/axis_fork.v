@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module axis_fork #(
     parameter DATA_WD = 64
 )(

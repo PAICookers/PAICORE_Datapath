@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module axis_dropData #
 (
     parameter DATA_WIDTH  = 64

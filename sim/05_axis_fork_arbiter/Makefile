@@ -32,6 +32,7 @@ COCOTB_HDL_TIMEPRECISION = 1ps
 DUT      = axis_fork_arbiter
 TOPLEVEL = $(DUT)_wrap_$(PORTS)
 MODULE   = test_$(DUT)
+VERILOG_SOURCES += ../../rtl/misc/*.v
 VERILOG_SOURCES += ../../rtl/axis_ip/*.v
 
 COCOTB_PY_DIR = /home/anne/miniconda3/envs/HDL/bin/python

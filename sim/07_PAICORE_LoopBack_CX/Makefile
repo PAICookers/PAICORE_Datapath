@@ -30,6 +30,7 @@ COCOTB_HDL_TIMEPRECISION = 1ps
 DUT      = PAICORE_LoopBack_CX
 TOPLEVEL = $(DUT)
 MODULE   = test_$(DUT)
+VERILOG_SOURCES += ../../rtl/misc/*.v
 VERILOG_SOURCES += ../../rtl/axis_ip/*.v
 VERILOG_SOURCES += ../../rtl/PAICORE_IP/*.v
 VERILOG_SOURCES += ../tb_rtl/*.v
