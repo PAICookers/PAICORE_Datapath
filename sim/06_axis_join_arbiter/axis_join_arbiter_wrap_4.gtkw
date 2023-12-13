@@ -1,17 +1,19 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Wed Dec  6 08:51:18 2023
+[*] Tue Dec 12 07:33:11 2023
 [*]
 [dumpfile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/06_axis_join_arbiter/axis_join_arbiter_wrap_4.fst"
-[dumpfile_mtime] "Wed Dec  6 08:50:06 2023"
-[dumpfile_size] 4709
+[dumpfile_mtime] "Tue Dec 12 07:32:48 2023"
+[dumpfile_size] 9967
 [savefile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/06_axis_join_arbiter/axis_join_arbiter_wrap_4.gtkw"
-[timestart] 2277800
+[timestart] 0
 [size] 1000 600
-[pos] 6962 90
-*-16.157413 2334400 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] 11330 -1
+*-16.157413 54400 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] axis_join_arbiter_wrap_4.
 [treeopen] axis_join_arbiter_wrap_4.axis_join_arbiter_inst.
+[treeopen] axis_join_arbiter_wrap_4.axis_join_arbiter_inst.genblk4.
+[treeopen] axis_join_arbiter_wrap_4.axis_join_arbiter_inst.genblk4.u_Round_Robin_arbiter.
 [sst_width] 214
 [signals_width] 190
 [sst_expanded] 1
@@ -19,6 +21,10 @@
 @28
 axis_join_arbiter_wrap_4.clk
 axis_join_arbiter_wrap_4.rst
+@200
+-
+@22
+axis_join_arbiter_wrap_4.ien[3:0]
 @200
 -
 @28
@@ -34,7 +40,7 @@ axis_join_arbiter_wrap_4.s01_axis_tready
 axis_join_arbiter_wrap_4.s01_axis_tvalid
 axis_join_arbiter_wrap_4.s01_axis_tlast
 @22
-axis_join_arbiter_wrap_4.s02_axis_tdata[63:0]
+axis_join_arbiter_wrap_4.s01_axis_tdata[63:0]
 @200
 -
 @28
@@ -45,13 +51,14 @@ axis_join_arbiter_wrap_4.s02_axis_tlast
 axis_join_arbiter_wrap_4.s02_axis_tdata[63:0]
 @200
 -
-@28
+@29
 axis_join_arbiter_wrap_4.s03_axis_tready
+@28
 axis_join_arbiter_wrap_4.s03_axis_tvalid
 axis_join_arbiter_wrap_4.s03_axis_tlast
 @22
 axis_join_arbiter_wrap_4.s03_axis_tdata[63:0]
-@201
+@200
 -
 @28
 axis_join_arbiter_wrap_4.m_axis_tready

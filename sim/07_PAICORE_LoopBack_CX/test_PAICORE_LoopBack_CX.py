@@ -14,6 +14,7 @@ from cocotbext.axi import AxiStreamBus, AxiStreamFrame, AxiStreamSource, AxiStre
 import numpy as np
 
 from functools  import reduce
+import os
 
 def toByteList(x, length=4):
     val = x.item().to_bytes(length=length, byteorder='little', signed=False)
@@ -41,6 +42,8 @@ class TB(object):
     def __init__(self, dut):
         self.dut = dut
         cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
+
+        self.ports = int(os.getenv("PORTS"))
 
         self.source = AxiStreamSource(
             AxiStreamBus.from_prefix(dut, "s_axis"), dut.clk, dut.rst
@@ -78,6 +81,7 @@ async def run_simple_test(dut, idle_inserter=None, backpressure_inserter=None):
     byte_lanes = tb.source.byte_lanes  # 位宽字节数
     await tb.reset()
 
+    tb.dut.oen.setimmediatevalue(2**tb.ports-1)
     tb.dut.i_rx_rcving.setimmediatevalue(1)
 
     tb.set_idle_generator(idle_inserter)
@@ -86,6 +90,7 @@ async def run_simple_test(dut, idle_inserter=None, backpressure_inserter=None):
     for k in range(10):
         # length = random.randint(32, 64)
         length = 64 # 数据个数
+
         tb.dut.single_channel.setimmediatevalue(0)
         tb.dut.single_channel_mask.setimmediatevalue(0b0001)
         tb.dut.send_len.setimmediatevalue(length)

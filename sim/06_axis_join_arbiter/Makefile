@@ -20,7 +20,7 @@
 
 TOPLEVEL_LANG = verilog
 
-export PORTS ?= 3
+export PORTS ?= 4
 
 SIM ?= icarus
 # SIM ?= questa

@@ -6,6 +6,8 @@ module PAICORE_send_XC#(
     input                           s_axis_aclk,
     input                           s_axis_aresetn,
 
+    input  [Channel-1:0]            oen,
+
     input                           single_channel,
     input  [Channel-1:0]            single_channel_mask,
     input  [31:0]                   send_len,
@@ -63,6 +65,7 @@ module PAICORE_send_XC#(
     )u_axis_fork_arbiter(
         .clk                (s_axis_aclk        ),
         .rst                (!s_axis_aresetn    ),
+        .oen                (oen                ),
         .fork_enable        (!single_channel    ),
         .single_mask        (single_channel_mask),
         .s_axis_tready      (gen_last_tready    ),

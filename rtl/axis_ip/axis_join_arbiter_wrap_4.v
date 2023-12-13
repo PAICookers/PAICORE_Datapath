@@ -13,6 +13,8 @@ module axis_join_arbiter_wrap_4 #
     input  wire                     clk,
     input  wire                     rst,
 
+    input  wire [4-1:0]         ien,
+
     /*
      * AXI Stream inputs
      */
@@ -52,6 +54,8 @@ axis_join_arbiter #(
 axis_join_arbiter_inst (
     .clk(clk),
     .rst(rst),
+    .ien(ien),
+
     // AXI inputs
     .s_axis_tvalid({ s03_axis_tvalid, s02_axis_tvalid, s01_axis_tvalid, s00_axis_tvalid }),
     .s_axis_tdata({ s03_axis_tdata, s02_axis_tdata, s01_axis_tdata, s00_axis_tdata }),

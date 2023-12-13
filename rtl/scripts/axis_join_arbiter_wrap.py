@@ -9,7 +9,7 @@ from jinja2 import Template
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.strip())
-    parser.add_argument('-p', '--ports',  type=int, default=3, help="number of ports")
+    parser.add_argument('-p', '--ports',  type=int, default=4, help="number of ports")
     parser.add_argument('-n', '--name',   type=str, help="module name")
     parser.add_argument('-o', '--output', type=str, help="output file name")
 
@@ -48,6 +48,8 @@ module {{name}} #
     input  wire                     clk,
     input  wire                     rst,
 
+    input  wire [{{n}}-1:0]         ien,
+
     /*
      * AXI Stream inputs
      */
@@ -73,6 +75,8 @@ axis_join_arbiter #(
 axis_join_arbiter_inst (
     .clk(clk),
     .rst(rst),
+    .ien(ien),
+
     // AXI inputs
     .s_axis_tvalid({ {% for p in range(n-1,-1,-1) %}s{{'%02d'%p}}_axis_tvalid{% if not loop.last %}, {% endif %}{% endfor %} }),
     .s_axis_tdata({ {% for p in range(n-1,-1,-1) %}s{{'%02d'%p}}_axis_tdata{% if not loop.last %}, {% endif %}{% endfor %} }),

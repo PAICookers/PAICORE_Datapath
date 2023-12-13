@@ -69,6 +69,7 @@ class TB(object):
 
 
 @cocotb.test(timeout_time=2000000, timeout_unit="ns")
+# @cocotb.test(timeout_time=20000, timeout_unit="ns")
 async def run_test(dut, idle_inserter=None, backpressure_inserter=None):
     tb = TB(dut)
     byte_lanes = tb.source[0].byte_lanes  # 位宽字节数
@@ -78,17 +79,24 @@ async def run_test(dut, idle_inserter=None, backpressure_inserter=None):
     tb.set_backpressure_generator(backpressure_inserter)
 
     for k in range(10):
+
+        ien_bin = '{0:04b}'.format(random.randint(1, 15))
+        tb.dut.ien.setimmediatevalue(int(ien_bin,2))
+        
         length = random.randint(32, 64) * 10
         # length = 10  # 数据个数
     
         inputFrames = np.array([],dtype=np.uint64)
         for i in range(tb.ports):
-            rand_data = random_int_list(0, 255, length * byte_lanes)
-            test_data = bytearray(rand_data)
-            test_frame = AxiStreamFrame(test_data)
-            await tb.source[i].send(test_frame)
-            inputFrame = axisFrame2np(test_frame.tdata)
-            inputFrames = np.append(inputFrames,inputFrame)
+            if(ien_bin[tb.ports-i-1] == '0'):
+                pass
+            else:
+                rand_data = random_int_list(0, 255, length * byte_lanes)
+                test_data = bytearray(rand_data)
+                test_frame = AxiStreamFrame(test_data)
+                await tb.source[i].send(test_frame)
+                inputFrame = axisFrame2np(test_frame.tdata)
+                inputFrames = np.append(inputFrames,inputFrame)
 
         rx_frame = await tb.sink.recv()
         outputFrames = axisFrame2np(rx_frame.tdata)

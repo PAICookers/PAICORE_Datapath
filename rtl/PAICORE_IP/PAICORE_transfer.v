@@ -63,6 +63,7 @@ module PAICORE_transfer#(
     ) u_PAICORE_send_XC(
         .s_axis_aclk        (s_axis_aclk        ),
         .s_axis_aresetn     (s_axis_aresetn     ),
+        .oen                (oen                ),
         .single_channel     (single_channel     ),
         .single_channel_mask(single_channel_mask),
         .send_len           (send_len           ),
@@ -87,6 +88,7 @@ module PAICORE_transfer#(
     ) u_PAICORE_recv_XC(
         .m_axis_aclk        (m_axis_aclk    ),
         .m_axis_aresetn     (m_axis_aresetn ),
+        .ien                (~oen           ),
         .oFrameNumMax       (oFrameNumMax   ),
         .read_hsked         (read_hsked     ),
         .read_data          (read_data      ),

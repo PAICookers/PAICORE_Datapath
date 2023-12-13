@@ -1,11 +1,11 @@
 `timescale 1ns / 1ps
 module PAICORE_LoopBack_CX#(
-    parameter Channel = 2,
+    parameter Channel = 4,
     parameter DATA_WIDTH = 64
 )(
     input  wire                         clk,
     input  wire                         rst,
-
+    input  wire [Channel-1:0]           oen,
     input  wire                         single_channel,
     input  wire [Channel-1:0]           single_channel_mask,
     input  wire [31:0]                  send_len,
@@ -49,6 +49,7 @@ module PAICORE_LoopBack_CX#(
     ) u_PAICORE_send_XC(
         .s_axis_aclk        (clk                ),
         .s_axis_aresetn     (!rst               ),
+        .oen                (oen                ),
         .single_channel     (single_channel     ),
         .single_channel_mask(single_channel_mask),
         .send_len           (send_len           ),
@@ -75,6 +76,7 @@ module PAICORE_LoopBack_CX#(
     ) u_PAICORE_recv_XC(
         .m_axis_aclk        (clk            ),
         .m_axis_aresetn     (!rst           ),
+        .ien                (oen            ),
         .oFrameNumMax       (oFrameNumMax   ),
 
         .read_hsked         (               ),

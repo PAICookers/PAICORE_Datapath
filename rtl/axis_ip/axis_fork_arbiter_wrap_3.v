@@ -13,7 +13,8 @@ module axis_fork_arbiter_wrap_3 #
 (
     input  wire                     clk,
     input  wire                     rst,
-                 
+
+    input  wire [3-1:0]         oen,
     input                           fork_enable,
     input  wire [3-1:0]         single_mask,
     /*
@@ -50,6 +51,7 @@ axis_fork_arbiter #(
 axis_fork_arbiter_inst (
     .clk(clk),
     .rst(rst),
+    .oen(oen),
     .fork_enable(fork_enable),
     .single_mask(single_mask),
 

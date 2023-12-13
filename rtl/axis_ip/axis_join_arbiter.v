@@ -6,6 +6,8 @@ module axis_join_arbiter #(
     input                                   clk,
     input                                   rst,
 
+    input  wire [S_COUNT-1:0]               ien,
+
     input  wire [S_COUNT-1:0]               s_axis_tvalid,
     input  wire [S_COUNT*DATA_WIDTH-1:0]    s_axis_tdata ,
     input  wire [S_COUNT-1:0]               s_axis_tlast ,
@@ -36,24 +38,24 @@ module axis_join_arbiter #(
             assign grant_out = 1'b1;
         end else if (Use_Fixed) begin
             Fixed_arbiter #(
-                .NUM_REQ    (S_COUNT                                    )
+                .NUM_REQ    (S_COUNT                                        )
             ) u_Fixed_arbiter(
-                .arb_enable (1'b1                                       ),
-                .single_mask({S_COUNT{1'b0}}                            ),
-                .request    (s_axis_tvalid & {S_COUNT{m_axis_tready}}   ),
-                .grant      (s_axis_tready                              ),
-                .pre_req    (                                           )
+                .arb_enable (1'b1                                           ),
+                .single_mask({S_COUNT{1'b0}}                                ),
+                .request    (s_axis_tvalid & {S_COUNT{m_axis_tready}} & ien ),
+                .grant      (s_axis_tready                                  ),
+                .pre_req    (                                               )
             );
         end else begin
             Round_Robin_arbiter #(
-                .NUM_REQ    (S_COUNT                                    )
+                .NUM_REQ    (S_COUNT                                        )
             ) u_Round_Robin_arbiter(
-                .clk        (clk                                        ),
-                .rst_n      (!rst                                       ),
-                .arb_enable (1'b1                                       ),
-                .single_mask({S_COUNT{1'b0}}                            ),
-                .request    (s_axis_tvalid & {S_COUNT{m_axis_tready}}   ),
-                .grant      (s_axis_tready                              )
+                .clk        (clk                                            ),
+                .rst_n      (!rst                                           ),
+                .arb_enable (1'b1                                           ),
+                .single_mask({S_COUNT{1'b0}}                                ),
+                .request    (s_axis_tvalid & {S_COUNT{m_axis_tready}} & ien ),
+                .grant      (s_axis_tready                                  )
             );
         end
     endgenerate
@@ -73,7 +75,7 @@ module axis_join_arbiter #(
     end
 
     assign m_axis_tdata  = data_shift[DATA_WIDTH-1:0];
-    assign m_axis_tvalid = |(s_axis_tvalid & s_axis_tready);
-    assign m_axis_tlast  = &(tlast_flag | (s_axis_tlast & (s_axis_tvalid & s_axis_tready))); // bad timing, sim only
+    assign m_axis_tvalid = |(s_axis_tvalid & s_axis_tready & ien );
+    assign m_axis_tlast  = &(tlast_flag | (s_axis_tlast & (s_axis_tvalid & s_axis_tready)) | ~ien); // bad timing, sim only
 
 endmodule

@@ -6,6 +6,8 @@ module PAICORE_recv_XC#(
     input                       m_axis_aclk,
     input                       m_axis_aresetn,
 
+    input  [Channel-1:0]        ien,
+
     input  [31:0]               oFrameNumMax,
 
     output                      read_hsked,
@@ -66,6 +68,7 @@ module PAICORE_recv_XC#(
     ) u_axis_join_arbiter(
         .clk                (m_axis_aclk        ),
         .rst                (!m_axis_aresetn    ),
+        .ien                (ien                ),
         .s_axis_tvalid      (fifo_tvalid        ),
         .s_axis_tdata       (fifo_tdata         ),
         .s_axis_tlast       (fifo_tlast         ),

@@ -6,6 +6,8 @@ module axis_fork_arbiter #(
     input                                   clk,
     input                                   rst,
 
+    input  wire [M_COUNT-1:0]               oen,
+
     input                                   fork_enable,
     input  wire [M_COUNT-1:0]               single_mask,
 
@@ -29,24 +31,24 @@ module axis_fork_arbiter #(
             assign grant_out = 1'b1;
         end else if (Use_Fixed) begin
             Fixed_arbiter #(
-                .NUM_REQ    (M_COUNT)
+                .NUM_REQ    (M_COUNT            )
             ) u_Fixed_arbiter(
-                .arb_enable (fork_enable    ),
-                .single_mask(single_mask    ),
-                .request    (m_axis_tready  ),
-                .grant      (grant_out      ),
-                .pre_req    (               )
+                .arb_enable (fork_enable        ),
+                .single_mask(single_mask        ),
+                .request    (m_axis_tready & oen),
+                .grant      (grant_out          ),
+                .pre_req    (                   )
             );
         end else begin
             Round_Robin_arbiter #(
-                .NUM_REQ    (M_COUNT)
+                .NUM_REQ    (M_COUNT            )
             ) u_Round_Robin_arbiter(
-                .clk        (clk            ),
-                .rst_n      (!rst           ),
-                .arb_enable (fork_enable    ),
-                .single_mask(single_mask    ),
-                .request    (m_axis_tready  ),
-                .grant      (grant_out      )
+                .clk        (clk                ),
+                .rst_n      (!rst               ),
+                .arb_enable (fork_enable        ),
+                .single_mask(single_mask        ),
+                .request    (m_axis_tready & oen),
+                .grant      (grant_out          )
             );
         end
     endgenerate
@@ -64,7 +66,7 @@ module axis_fork_arbiter #(
     end
     
     assign fork_done = fork_done_reg && (&m_axis_tready);
-    assign s_axis_tready = fork_enable ? |m_axis_tready : m_axis_tready[0];
+    assign s_axis_tready = |(m_axis_tready & oen & (fork_enable ? {M_COUNT{1'b1}} : single_mask));
     assign m_axis_tdata  = fork_done_reg ? {M_COUNT{{DATA_WIDTH{1'b1}}}} : {M_COUNT{s_axis_tdata}};
     assign m_axis_tlast  = {M_COUNT{fork_done_reg}};
     assign m_axis_tvalid = ({M_COUNT{s_axis_tvalid}} & grant_out) | {M_COUNT{fork_done}};

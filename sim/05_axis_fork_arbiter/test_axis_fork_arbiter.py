@@ -99,21 +99,23 @@ async def run_test(dut, idle_inserter=None, backpressure_inserter=None):
     byte_lanes = tb.source.byte_lanes  # 位宽字节数
     await tb.reset()
 
-    # if not fork_enable, then only first channel can send data
-    tb.dut.fork_enable.setimmediatevalue(1)
-    tb.dut.single_mask.setimmediatevalue(0b001)
-    
     tb.set_idle_generator(idle_inserter)
     tb.set_backpressure_generator(backpressure_inserter)
+
+    tb.dut.fork_enable.setimmediatevalue(1)
+    tb.dut.single_mask.setimmediatevalue(0b0000)
 
     test_str = ""
     if idle_inserter is not None:
         test_str += "_idle"
     if backpressure_inserter is not None:
         test_str += "_backpressure"
-    tb.log.info("run" + test_str + "_test")    
-    for k in range(10):
-        length = random.randint(32, 64) * 10 * tb.ports
+        
+    for oen_index in range(1,16):
+        tb.log.info("run" + test_str + "_test_" + str(tb.ports) + "_"+ str(bin(oen_index)))  
+        tb.dut.oen.setimmediatevalue(oen_index)
+
+        length = random.randint(32, 64) * 10
         # length = 10  # 数据个数
 
         rand_data = random_int_list(0, 255, length * byte_lanes)
@@ -130,7 +132,58 @@ async def run_test(dut, idle_inserter=None, backpressure_inserter=None):
             outputFrame = axisFrame2np(rx_frame.tdata)
             outputFrames = np.append(outputFrames,outputFrame)
             tb.log.info("channel {:d} : {:d}".format(i,outputFrame.size - 1))
-            if(tb.dut.fork_enable.value == 0 and i != 0):
+        tb.log.info("\n")
+        inputFrames  = np.sort(inputFrames)
+        outputFrames = np.sort(outputFrames)
+        assert (inputFrames == outputFrames).all()
+
+    for i in range(100):
+        await RisingEdge(dut.clk)
+
+    remove_duplicate_lines('test.log', 'test.log')
+
+
+@cocotb.test(timeout_time=2000000, timeout_unit="ns")
+async def run_single_test(dut, idle_inserter=None, backpressure_inserter=None):
+    tb = TB(dut)
+    byte_lanes = tb.source.byte_lanes  # 位宽字节数
+    await tb.reset()
+
+    tb.set_idle_generator(idle_inserter)
+    tb.set_backpressure_generator(backpressure_inserter)
+
+    tb.dut.oen.setimmediatevalue(2**tb.ports-1)
+
+    tb.dut.fork_enable.setimmediatevalue(0)
+
+    test_str = ""
+    if idle_inserter is not None:
+        test_str += "_idle"
+    if backpressure_inserter is not None:
+        test_str += "_backpressure"
+        
+    for oen_index in range(1,16):
+        test_port = random.randint(0,tb.ports-1)
+        tb.dut.single_mask.setimmediatevalue(2**test_port)
+        tb.log.info("run" + test_str + "_test_" + str(tb.ports) + "_"+ str(bin(2**test_port)))  
+        length = random.randint(32, 64) * 10
+        # length = 10  # 数据个数
+
+        rand_data = random_int_list(0, 255, length * byte_lanes)
+        test_data = bytearray(rand_data)
+        test_frame = AxiStreamFrame(test_data)
+        await tb.source.send(test_frame)
+
+        inputFrames  = np.array([2**64-1]*tb.ports,dtype=np.uint64)
+        inputFrames  = np.append(inputFrames,axisFrame2np(test_frame.tdata))
+        
+        outputFrames = np.array([],dtype=np.uint64)
+        for i in range(tb.ports):
+            rx_frame = await tb.sink[i].recv()
+            outputFrame = axisFrame2np(rx_frame.tdata)
+            outputFrames = np.append(outputFrames,outputFrame)
+            tb.log.info("channel {:d} : {:d}".format(i,outputFrame.size - 1))
+            if(tb.dut.fork_enable.value == 0 and i != test_port):
                 assert (outputFrame.size - 1 == 0)
         tb.log.info("\n")
         inputFrames  = np.sort(inputFrames)
@@ -143,6 +196,7 @@ async def run_test(dut, idle_inserter=None, backpressure_inserter=None):
     remove_duplicate_lines('test.log', 'test.log')
 
 
+
 def cycle_pause():
     # return itertools.cycle([1, 1, 1, 0])
     return itertools.cycle(random_int_list(0, 1, 1024))
@@ -150,6 +204,11 @@ def cycle_pause():
 if os.path.exists("test.log"):
     os.remove("test.log")
 factory = TestFactory(run_test)
+factory.add_option("idle_inserter", [None, cycle_pause])
+factory.add_option("backpressure_inserter", [None, cycle_pause])
+factory.generate_tests()
+
+factory = TestFactory(run_single_test)
 factory.add_option("idle_inserter", [None, cycle_pause])
 factory.add_option("backpressure_inserter", [None, cycle_pause])
 factory.generate_tests()
