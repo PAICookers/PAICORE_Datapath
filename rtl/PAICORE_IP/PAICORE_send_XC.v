@@ -31,6 +31,11 @@ module PAICORE_send_XC#(
     output                          o_tx_done
 );
 
+    wire                            xdma_send_tready;
+    wire [DATA_WIDTH-1:0]           xdma_send_tdata ;
+    wire                            xdma_send_tlast ;
+    wire                            xdma_send_tvalid;
+
     wire                            gen_last_tready;
     wire [DATA_WIDTH-1:0]           gen_last_tdata ;
     wire                            gen_last_tlast ;
@@ -41,16 +46,22 @@ module PAICORE_send_XC#(
     wire [Channel-1:0]              fork_tlast ;
     wire [Channel-1:0]              fork_tvalid;
 
+    // reset send datapath
+    assign s_axis_tready    = s_axis_aresetn ? xdma_send_tready : 1'b1;
+    assign xdma_send_tdata  = s_axis_tdata;
+    assign xdma_send_tlast  = s_axis_tlast;
+    assign xdma_send_tvalid = s_axis_aresetn ? s_axis_tvalid : 1'b0;
+
     axis_gen_last u_axis_gen_last(
         .s_axis_aclk        (s_axis_aclk        ),
         .s_axis_aresetn     (s_axis_aresetn     ),
         .send_len           (send_len           ),
         .data_cnt           (data_cnt           ),
         .tlast_cnt          (tlast_cnt          ),        
-        .s_axis_tready      (s_axis_tready      ),
-        .s_axis_tdata       (s_axis_tdata       ),
-        .s_axis_tlast       (s_axis_tlast       ),
-        .s_axis_tvalid      (s_axis_tvalid      ),
+        .s_axis_tready      (xdma_send_tready   ),
+        .s_axis_tdata       (xdma_send_tdata    ),
+        .s_axis_tlast       (xdma_send_tlast    ),
+        .s_axis_tvalid      (xdma_send_tvalid   ),
         .m_axis_tready      (gen_last_tready    ),
         .m_axis_tdata       (gen_last_tdata     ),
         .m_axis_tlast       (gen_last_tlast     ),
