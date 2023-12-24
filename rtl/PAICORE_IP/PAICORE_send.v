@@ -55,7 +55,10 @@ module PAICORE_send(
         .write_data      (write_data        ) 
     );
 
-    axis_fifo_top u_axis_fifo_top(
+    axis_fifo_top #(
+        .DEPTH           (16                ),
+        .DATA_WIDTH      (64                )
+    ) u_axis_fifo_top(
         .s_axis_aclk     (s_axis_aclk       ),
         .s_axis_aresetn  (s_axis_aresetn    ),
         .s_axis_tready   (gen_last_tready   ),
