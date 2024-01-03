@@ -82,9 +82,9 @@ module PAICORE_recv_XC#(
     transport_up u_transport_up(
         .s_axis_aclk     (m_axis_aclk           ),
         .s_axis_aresetn  (m_axis_aresetn        ),
-        .o_recv_available(join_tready           ),
-        .i_recv_valid    (join_tvalid           ),
-        .i_recv_tdata    (join_tdata            ),
+        .s_axis_tready   (join_tready           ),
+        .s_axis_tvalid   (join_tvalid           ),
+        .s_axis_tdata    (join_tdata            ),
         .i_recv_done     (i_recv_done           ),
         .i_recv_busy     (i_recv_busy           ),
         .m_axis_tready   (tp_up_tready          ),

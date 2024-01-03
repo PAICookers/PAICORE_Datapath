@@ -4,9 +4,9 @@ module transport_up(
     input                       s_axis_aresetn,
 
     // PAICore Signals:
-    output                      o_recv_available,
-    input                       i_recv_valid,
-    input           [63: 0]     i_recv_tdata  ,
+    output                      s_axis_tready,
+    input                       s_axis_tvalid,
+    input           [63: 0]     s_axis_tdata  ,
     
     input                       i_recv_done  ,
     input                       i_recv_busy  ,
@@ -30,7 +30,7 @@ module transport_up(
     reg     [31: 0]     done_count;
     reg                 real_done, real_done_delay;
     wire                real_done_pos;
-    localparam DONE_COUNTER = 200;
+    localparam DONE_COUNTER = 1024;
     always @(posedge s_axis_aclk or negedge s_axis_aresetn) begin
         if (~s_axis_aresetn) begin
             done_count  <= 'b0;
@@ -61,10 +61,10 @@ module transport_up(
     assign real_done_pos = real_done & (~real_done_delay);
 
     // 2. transport:
-    assign m_axis_tvalid = i_rx_rcving & (i_recv_valid | real_done_pos);
-    assign m_axis_tlast = real_done_pos;
-    assign m_axis_tdata = real_done_pos ? 64'hffff_ffff_ffff_ffff : i_recv_tdata;
-    assign o_recv_available = i_rx_rcving & m_axis_tready;
+    assign m_axis_tvalid = s_axis_tvalid | real_done_pos;
+    assign m_axis_tlast  = real_done_pos;
+    assign m_axis_tdata  = real_done_pos ? 64'hffff_ffff_ffff_ffff : s_axis_tdata;
+    assign s_axis_tready = m_axis_tready;
 
     assign o_rx_done = real_done_pos;
 
