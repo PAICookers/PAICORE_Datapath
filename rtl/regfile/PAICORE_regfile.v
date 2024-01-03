@@ -65,9 +65,11 @@ module PAICORE_regfile #
     input  wire                   s_axil_rready
 
 );
-    reg  [DATA_WIDTH-1:0]	user_reg [REG_NUM-1:0];
-    wire [REG_NUM-1:0]      user_write;
-    wire [DATA_WIDTH-1:0]   user_wdata [REG_NUM-1:0];
+    wire [DATA_WIDTH*REG_NUM-1:0]   user_rdata;
+    wire [DATA_WIDTH-1:0]	        user_reg [REG_NUM-1:0];
+    wire [REG_NUM-1:0]              user_write;
+    wire [DATA_WIDTH-1:0]           user_wdata [REG_NUM-1:0];
+    wire [DATA_WIDTH*REG_NUM-1:0]   user_wdata_flat;
 
     reg  rx_done_delay, tx_done_delay;
     wire rx_done_pulse, tx_done_pulse; 
@@ -137,169 +139,46 @@ module PAICORE_regfile #
         end
     endgenerate
 
-    reg [ADDR_WIDTH-1 : 0]  axi_awaddr;
-    reg                     axi_awready;
-    reg                     axi_wready;
-    reg [1 : 0]             axi_bresp;
-    reg                     axi_bvalid;
-    reg [ADDR_WIDTH-1 : 0]  axi_araddr;
-    reg                     axi_arready;
-    reg [DATA_WIDTH-1 : 0]  axi_rdata;
-    reg [1 : 0]             axi_rresp;
-    reg                     axi_rvalid;
-
-    localparam integer ADDR_LSB = (DATA_WIDTH/32) + 1;
-    localparam integer OPT_MEM_ADDR_BITS = $clog2(REG_NUM) - 1;
-
-    wire                    slv_reg_rden, slv_reg_wren;
-    integer                 byte_index;
-    reg                     aw_en;
-
-    // I/O Connections assignments
-
-    assign s_axil_awready   = axi_awready;
-    assign s_axil_wready    = axi_wready;
-    assign s_axil_bresp	    = axi_bresp;
-    assign s_axil_bvalid    = axi_bvalid;
-    assign s_axil_arready   = axi_arready;
-    assign s_axil_rdata     = axi_rdata;
-    assign s_axil_rresp     = axi_rresp;
-    assign s_axil_rvalid    = axi_rvalid;
-
-    always @( posedge clk) begin
-        if (rst) begin
-            axi_awready <= 1'b0;
-            aw_en <= 1'b1;
-        end
-        else begin 
-            if (~axi_awready && s_axil_awvalid && s_axil_wvalid && aw_en) begin
-                axi_awready <= 1'b1;
-                aw_en <= 1'b0;
-            end
-            else if (s_axil_bready && axi_bvalid) begin
-                aw_en <= 1'b1;
-                axi_awready <= 1'b0;
-            end else begin
-                axi_awready <= 1'b0;
-            end
-        end
-    end
-
-    always @( posedge clk ) begin
-        if (rst) begin
-            axi_awaddr <= 0;
-        end else if (~axi_awready && s_axil_awvalid && s_axil_wvalid && aw_en) begin
-            axi_awaddr <= s_axil_awaddr;
-        end
-    end
-
-    always @( posedge clk ) begin
-        if (rst) begin
-            axi_wready <= 1'b0;
-        end 
-        else begin    
-            if (~axi_wready && s_axil_wvalid && s_axil_awvalid && aw_en )
-                axi_wready <= 1'b1;
-            else
-                axi_wready <= 1'b0;
-        end 
-    end       
-
-    assign slv_reg_wren = axi_wready && s_axil_wvalid && axi_awready && s_axil_awvalid;
-
-    wire [REG_NUM-1:0] axi_reg_sel, slv_reg_wren_vec;
-    assign axi_reg_sel = ({REG_NUM{1'b0}} + 1) << (axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB]);
-    assign slv_reg_wren_vec = axi_reg_sel & {REG_NUM{slv_reg_wren}};
-
-    // support strb
-    // genvar i;
-    // generate
-    //     for( i = 0 ; i <= REG_NUM-1; i = i+1) begin
-    //         always @( posedge clk )begin
-    //             if (rst) begin
-    //                 user_reg[i] <= 0;
-    //             end else if (slv_reg_wren_vec[i])begin
-    //                 for ( byte_index = 0; byte_index <= (DATA_WIDTH/8)-1; byte_index = byte_index+1 )
-    //                     if ( s_axil_wstrb[byte_index] == 1 ) begin
-    //                         user_reg[i][(byte_index*8) +: 8] <= s_axil_wdata[(byte_index*8) +: 8];
-    //                     end
-    //             end
-    //         end
-    //     end
-    // endgenerate
-
-    // not support strb
-
     genvar i;
     generate
         for( i = 0 ; i <= REG_NUM-1; i = i+1) begin
-            always @( posedge clk )begin
-                if (rst) begin
-                    user_reg[i] <= 0;
-                end else if (user_write[i]) begin
-                    user_reg[i] <= user_wdata[i];
-                end else if (slv_reg_wren_vec[i]) begin
-                    user_reg[i] <= s_axil_wdata;
-                end
-            end
+            assign user_reg[i] = user_rdata[(i+1)*DATA_WIDTH-1 : i*DATA_WIDTH];
+            assign user_wdata_flat[(i+1)*DATA_WIDTH-1 : i*DATA_WIDTH] = user_wdata[i];
         end
     endgenerate
 
-    always @( posedge clk ) begin
-        if ( rst ) begin
-            axi_bvalid  <= 0;
-            axi_bresp   <= 2'b0;
-        end 
-        else begin
-            if (axi_awready && s_axil_awvalid && ~axi_bvalid && axi_wready && s_axil_wvalid) begin
-                axi_bvalid <= 1'b1;
-                axi_bresp  <= 2'b0;
-            end else if (s_axil_bready && axi_bvalid) begin
-                axi_bvalid <= 1'b0;
-            end
-        end  
-    end   
-
-    always @( posedge clk ) begin
-        if ( rst ) begin
-            axi_arready <= 1'b0;
-            axi_araddr  <= 32'b0;
-        end else begin    
-            if (~axi_arready && s_axil_arvalid && (~s_axil_rvalid || (s_axil_rvalid && s_axil_rready))) begin
-                axi_arready <= 1'b1;
-                axi_araddr  <= s_axil_araddr;
-            end else begin
-                axi_arready <= 1'b0;
-            end
-        end 
-    end
- 
-    always @( posedge clk) begin
-        if ( rst ) begin
-            axi_rvalid <= 0;
-            axi_rresp  <= 0;
-        end else begin
-            if (axi_arready && s_axil_arvalid && ~axi_rvalid) begin
-                axi_rvalid <= 1'b1;
-                axi_rresp  <= 2'b0;
-            end   
-            else if (axi_rvalid && s_axil_rready) begin
-                axi_rvalid <= 1'b0;
-            end
-        end
-    end    
-
-    assign slv_reg_rden = axi_arready & s_axil_arvalid & ~axi_rvalid;
-
-    wire [DATA_WIDTH-1:0]    reg_data_out;
-    assign reg_data_out = user_reg[axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB]];
-
-    always @( posedge clk) begin
-        if ( rst ) begin
-            axi_rdata  <= 0;
-        end else if (slv_reg_rden) begin
-            axi_rdata <= reg_data_out;
-        end
-    end
-
+    
+    // AXI4-Lite    
+    axil_regfile #
+    (
+        .DATA_WIDTH         (DATA_WIDTH     ),
+        .ADDR_WIDTH         (ADDR_WIDTH     ),
+        .STRB_WIDTH         (STRB_WIDTH     ),
+        .REG_NUM            (REG_NUM        )
+    ) u_axil_regfile (
+        .clk                (clk            ),
+        .rst                (rst            ), 
+        .user_write         (user_write     ),
+        .user_wdata         (user_wdata_flat),
+        .user_rdata         (user_rdata     ),
+        .s_axil_awaddr      (s_axil_awaddr  ),
+        .s_axil_awprot      (s_axil_awprot  ),
+        .s_axil_awvalid     (s_axil_awvalid ),
+        .s_axil_awready     (s_axil_awready ),
+        .s_axil_wdata       (s_axil_wdata   ),
+        .s_axil_wstrb       (s_axil_wstrb   ),
+        .s_axil_wvalid      (s_axil_wvalid  ),
+        .s_axil_wready      (s_axil_wready  ),
+        .s_axil_bresp       (s_axil_bresp   ),
+        .s_axil_bvalid      (s_axil_bvalid  ),
+        .s_axil_bready      (s_axil_bready  ),
+        .s_axil_araddr      (s_axil_araddr  ),
+        .s_axil_arprot      (s_axil_arprot  ),
+        .s_axil_arvalid     (s_axil_arvalid ),
+        .s_axil_arready     (s_axil_arready ),
+        .s_axil_rdata       (s_axil_rdata   ),
+        .s_axil_rresp       (s_axil_rresp   ),
+        .s_axil_rvalid      (s_axil_rvalid  ),
+        .s_axil_rready      (s_axil_rready  )
+    );
 endmodule

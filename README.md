@@ -27,3 +27,28 @@ PCIe的axis读似乎并不快，还不如用axil将输出一个个读出来，�
 
 有时通路会卡住，但PCIe CORE是正常的，芯片复位了，通路复位了，但就是无法工作？
 设置一条旁路，将数据输出或接收？
+
+## axil传输效率提升
+注意：axil只支持32bit的数据位宽
+### xilinx模板实现
+** test_axil_regfile.run_test_read       PASS       1700.00           0.20       8587.49  **
+** test_axil_regfile.run_test_read_001   PASS       1710.00           0.17      10269.43  **
+** test_axil_regfile.run_test_read_002   PASS       2350.00           0.20      11977.40  **
+** test_axil_regfile.run_test_read_003   PASS       2040.00           0.20      10217.33  **
+** test_axil_regfile.run_test_read_004   PASS       2540.00           0.21      11882.83  **
+
+### 改进读
+** test_axil_regfile.run_test_read       PASS       1380.00           0.19       7339.58  **
+** test_axil_regfile.run_test_read_001   PASS       1390.00           0.18       7762.26  **
+** test_axil_regfile.run_test_read_002   PASS       2010.00           0.18      11179.71  **
+** test_axil_regfile.run_test_read_003   PASS       1780.00           0.23       7908.94  **
+** test_axil_regfile.run_test_read_004   PASS       2120.00           0.21      10055.13  **
+
+### 改进读写
+** test_axil_regfile.run_test_read       PASS         750.00           0.06      12254.89  **
+** test_axil_regfile.run_test_read_001   PASS         760.00           0.04      19882.71  **
+** test_axil_regfile.run_test_read_002   PASS        1070.00           0.05      23503.68  **
+** test_axil_regfile.run_test_read_003   PASS        1350.00           0.12      10871.28  **
+** test_axil_regfile.run_test_read_004   PASS        1430.00           0.11      12607.43  **
+
+## 如果芯片确实没输出的时候，是否有进行处理？

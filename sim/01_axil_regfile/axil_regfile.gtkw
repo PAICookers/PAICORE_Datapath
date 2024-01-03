@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Wed Dec  6 09:29:25 2023
+[*] Fri Dec 29 07:38:48 2023
 [*]
-[dumpfile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/01_axil_regfile/axil_regfile.fst"
-[dumpfile_mtime] "Wed Dec  6 09:29:16 2023"
-[dumpfile_size] 229670
-[savefile] "/home/anne/work/1_IC/PAICORE_Datapath/sim/01_axil_regfile/axil_regfile.gtkw"
-[timestart] 0
-[size] 1000 467
-[pos] 3350 246
-*-26.865517 249343600 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[dumpfile] "/home/anne/work/2_AILAB/1_Hardware/PAICORE_Datapath/sim/01_axil_regfile/axil_regfile.fst"
+[dumpfile_mtime] "Fri Dec 29 07:37:39 2023"
+[dumpfile_size] 7047
+[savefile] "/home/anne/work/2_AILAB/1_Hardware/PAICORE_Datapath/sim/01_axil_regfile/axil_regfile.gtkw"
+[timestart] 328300
+[size] 1000 454
+[pos] 78237 65878
+*-14.865517 385100 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [sst_width] 214
 [signals_width] 182
 [sst_expanded] 1
@@ -21,7 +21,6 @@ axil_regfile.rst
 -
 @28
 axil_regfile.s_axil_arready
-@29
 axil_regfile.s_axil_arvalid
 @22
 axil_regfile.s_axil_araddr[31:0]
@@ -31,9 +30,13 @@ axil_regfile.s_axil_araddr[31:0]
 axil_regfile.s_axil_rready
 axil_regfile.s_axil_rvalid
 @22
-axil_regfile.s_axil_rdata[63:0]
+axil_regfile.s_axil_rdata[31:0]
 @28
 axil_regfile.s_axil_rresp[1:0]
+@200
+-
+@28
+axil_regfile.clk
 @200
 -
 @28
@@ -41,13 +44,15 @@ axil_regfile.s_axil_awready
 axil_regfile.s_axil_awvalid
 @22
 axil_regfile.s_axil_awaddr[31:0]
+@24
+axil_regfile.s_axil_awaddr[31:0]
 @200
 -
 @28
 axil_regfile.s_axil_wready
 axil_regfile.s_axil_wvalid
 @22
-axil_regfile.s_axil_wdata[63:0]
+axil_regfile.s_axil_wdata[31:0]
 @200
 -
 @28
@@ -56,6 +61,12 @@ axil_regfile.s_axil_bready
 axil_regfile.s_axil_bresp[1:0]
 @200
 -
+@23
+axil_regfile.user_rdata[1023:0]
+@22
+axil_regfile.user_wdata[31:0]
+axil_regfile.user_write[31:0]
+@200
 -
 [pattern_trace] 1
 [pattern_trace] 0
