@@ -29,20 +29,27 @@ module transport_up(
     // 1. get real done: 
     reg     [31: 0]     done_count;
     reg                 real_done, real_done_delay;
-    wire                real_done_pluse;
+    wire                real_done_pos;
+    localparam DONE_COUNTER = 200;
+    always @(posedge s_axis_aclk or negedge s_axis_aresetn) begin
+        if (~s_axis_aresetn) begin
+            done_count  <= 'b0;
+        end else if (i_rx_rcving && i_recv_done && !i_recv_busy) begin        
+            if (done_count >= DONE_COUNTER)
+                done_count  <= done_count;
+            else
+                done_count  <= done_count + 1;
+        end else begin
+            done_count  <= 'b0;
+        end
+    end
 
     always @(posedge s_axis_aclk or negedge s_axis_aresetn) begin
         if(~s_axis_aresetn) begin
-            done_count  <= 'b0;
             real_done   <= 1'b0;
-        end else if(i_recv_done && !i_recv_busy) begin                   
-            done_count  <= done_count + 1;
-            if(done_count >= 100)
-                real_done   <= 1'b1;
-            else
-                real_done   <= 1'b0;
+        end else if(done_count >= DONE_COUNTER) begin
+            real_done   <= 1'b1;
         end else begin
-            done_count  <= 'b0;
             real_done   <= 1'b0;
         end
     end
@@ -51,14 +58,14 @@ module transport_up(
         real_done_delay <= real_done;
     end
 
-    assign real_done_pluse = real_done & (~real_done_delay);
+    assign real_done_pos = real_done & (~real_done_delay);
 
     // 2. transport:
-    assign m_axis_tvalid = i_rx_rcving & (i_recv_valid | real_done_pluse);
-    assign m_axis_tlast = real_done_pluse;
-    assign m_axis_tdata = real_done_pluse ? 64'hffff_ffff_ffff_ffff : i_recv_tdata;
+    assign m_axis_tvalid = i_rx_rcving & (i_recv_valid | real_done_pos);
+    assign m_axis_tlast = real_done_pos;
+    assign m_axis_tdata = real_done_pos ? 64'hffff_ffff_ffff_ffff : i_recv_tdata;
     assign o_recv_available = i_rx_rcving & m_axis_tready;
 
-    assign o_rx_done = real_done_pluse;
+    assign o_rx_done = real_done_pos;
 
 endmodule

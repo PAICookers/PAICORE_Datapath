@@ -81,7 +81,7 @@ module fork_send_XC#(
         end else if(o_tx_done) begin
             o_tx_done_flag <= {Channel{1'b0}};
         end else begin
-            o_tx_done_flag <= o_tx_done_flag | (fifo_tvalid & fifo_tready & fifo_tlast);
+            o_tx_done_flag <= o_tx_done_flag | (s_axis_tready & s_axis_tvalid & s_axis_tlast);
         end
     end
 
