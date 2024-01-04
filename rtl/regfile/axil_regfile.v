@@ -43,7 +43,7 @@ module axil_regfile #
 
 );
 
-    reg [DATA_WIDTH-1:0]	user_reg [REG_NUM-1:0];
+    reg [DATA_WIDTH-1:0]    user_reg [REG_NUM-1:0];
 
     reg                     arready_reg;
 

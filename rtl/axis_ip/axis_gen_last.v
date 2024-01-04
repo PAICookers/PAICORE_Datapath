@@ -22,7 +22,7 @@ module axis_gen_last(
 );
 
     assign s_axis_tready = m_axis_tready;
-    assign s_axis_hsked  = s_axis_tready&&s_axis_tvalid;
+    assign s_axis_hsked  = s_axis_tready && s_axis_tvalid;
     assign write_data = s_axis_tdata;
 
     always@(posedge s_axis_aclk) begin

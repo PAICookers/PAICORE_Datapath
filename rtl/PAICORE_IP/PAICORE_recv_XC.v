@@ -43,6 +43,11 @@ module PAICORE_recv_XC#(
     wire                            tp_up_tlast ;
     wire                            tp_up_tvalid;
 
+    wire                            fifo1_tready;
+    wire [DATA_WIDTH-1:0]           fifo1_tdata ;
+    wire                            fifo1_tlast ;
+    wire                            fifo1_tvalid;
+
     wire                            padding_tready;
     wire [DATA_WIDTH-1:0]           padding_tdata ;
     wire                            padding_tlast ;
@@ -96,15 +101,31 @@ module PAICORE_recv_XC#(
         .o_rx_done       (o_rx_done             )
     );
 
+    axis_fifo_top #(
+        .DEPTH           (16                ),
+        .DATA_WIDTH      (DATA_WIDTH        )
+    )  u_axis_fifo_top_1(
+        .s_axis_aclk     (m_axis_aclk       ),
+        .s_axis_aresetn  (m_axis_aresetn    ),
+        .s_axis_tready   (tp_up_tready      ),
+        .s_axis_tdata    (tp_up_tdata       ),
+        .s_axis_tlast    (tp_up_tlast       ),
+        .s_axis_tvalid   (tp_up_tvalid      ),
+        .m_axis_tready   (fifo1_tready      ),
+        .m_axis_tdata    (fifo1_tdata       ),
+        .m_axis_tlast    (fifo1_tlast       ),
+        .m_axis_tvalid   (fifo1_tvalid      )  
+    );
+
     // wrong handshake, need fix
     axis_dataPadding u_axis_dataPadding(
         .s_axis_aclk     (m_axis_aclk           ),
         .s_axis_aresetn  (m_axis_aresetn        ),
         .oFrameNumMax    (oFrameNumMax          ),
-        .s_axis_tready   (tp_up_tready          ),
-        .s_axis_tdata    (tp_up_tdata           ),
-        .s_axis_tlast    (tp_up_tlast           ),
-        .s_axis_tvalid   (tp_up_tvalid          ),
+        .s_axis_tready   (fifo1_tready          ),
+        .s_axis_tdata    (fifo1_tdata           ),
+        .s_axis_tlast    (fifo1_tlast           ),
+        .s_axis_tvalid   (fifo1_tvalid          ),
         .m_axis_tready   (padding_tready        ),
         .m_axis_tdata    (padding_tdata         ),
         .m_axis_tlast    (padding_tlast         ),
