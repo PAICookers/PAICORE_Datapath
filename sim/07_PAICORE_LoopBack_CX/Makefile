@@ -22,8 +22,9 @@ TOPLEVEL_LANG = verilog
 
 export PORTS ?= 4
 
-SIM ?= icarus
+# SIM ?= icarus
 # SIM ?= questa
+SIM ?= verilator
 WAVES ?= 1
 
 COCOTB_HDL_TIMEUNIT = 1ns

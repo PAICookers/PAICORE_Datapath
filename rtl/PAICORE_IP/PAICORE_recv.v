@@ -52,9 +52,9 @@ module PAICORE_recv(
     transport_up u_transport_up(
         .s_axis_aclk     (m_axis_aclk       ),
         .s_axis_aresetn  (m_axis_aresetn    ),
-        .o_recv_available(recver_available  ),
-        .i_recv_valid    (recver_valid      ),
-        .i_recv_tdata    (recver_data       ),
+        .s_axis_tready   (recver_available  ),
+        .s_axis_tvalid   (recver_valid      ),
+        .s_axis_tdata    (recver_data       ),
         .i_recv_done     (i_recv_done       ),
         .i_recv_busy     (i_recv_busy       ),
         .m_axis_tready   (tp_up_tready      ),

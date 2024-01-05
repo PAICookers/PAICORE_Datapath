@@ -128,9 +128,9 @@ module PAICORE_recv_2C(
     transport_up u_transport_up_C0(
         .s_axis_aclk     (m_axis_aclk           ),
         .s_axis_aresetn  (m_axis_aresetn        ),
-        .o_recv_available(mux_tready            ),
-        .i_recv_valid    (mux_tvalid            ),
-        .i_recv_tdata    (mux_tdata             ),
+        .s_axis_tready   (mux_tready            ),
+        .s_axis_tvalid   (mux_tvalid            ),
+        .s_axis_tdata    (mux_tdata             ),
         .i_recv_done     (i_recv_done           ),
         .i_recv_busy     (i_recv_busy           ),
         .m_axis_tready   (tp_up_tready          ),
