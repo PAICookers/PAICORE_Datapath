@@ -50,7 +50,7 @@ module axis_dataPadding(
     assign s_axis_hsked  = s_axis_tready&&s_axis_tvalid;
     assign m_axis_hsked  = m_axis_tready&&m_axis_tvalid;
 
-    assign m_axis_tdata  = extraFrameFlag ? 64'h0000_0000_0000_0000 : s_axis_tdata;
+    assign m_axis_tdata  = extraFrameFlag ? 64'hffff_ffff_ffff_ffff : s_axis_tdata;
     assign m_axis_tvalid = s_axis_tvalid || extraFrameFlag;
     assign m_axis_tlast  = (s_axis_tlast && (data_cnt >= oFrameNumMax)) || (extraFrameFlag && data_cnt == oFrameNumMax);
 

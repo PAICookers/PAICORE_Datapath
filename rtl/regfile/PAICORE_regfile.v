@@ -31,6 +31,7 @@ module PAICORE_regfile #
     input  [63:0]                 read_data,
     input  [31:0]                 data_cnt,
     input  [31:0]                 tlast_cnt,
+    input  [31:0]                 us_tick_num,
 
     output [31:0]                 send_len,
     output [31:0]                 oFrameNumMax,
@@ -117,6 +118,9 @@ module PAICORE_regfile #
     // tlast_cnt 
     assign user_write[11] = 1'b1;
     assign user_wdata[11] = tlast_cnt;
+    // tlast_cnt 
+    assign user_write[12] = 1'b1;
+    assign user_wdata[12] = us_tick_num;
 
 
     assign rx_state     = user_reg[0];
@@ -133,7 +137,7 @@ module PAICORE_regfile #
 
     genvar j;
     generate
-        for( j = 12 ; j <= REG_NUM-1; j = j+1) begin
+        for( j = 13 ; j <= REG_NUM-1; j = j+1) begin
             assign user_write[j] = 1'b0;
             assign user_wdata[j] = {DATA_WIDTH{1'b0}};
         end

@@ -4,7 +4,7 @@
 
 module axil_regfile #
 (
-    parameter DATA_WIDTH = 32,
+    parameter DATA_WIDTH = 32, // fix
     parameter ADDR_WIDTH = 32,
     parameter STRB_WIDTH = (DATA_WIDTH/8),
     parameter REG_NUM    = 32
@@ -86,9 +86,9 @@ module axil_regfile #
     assign s_axil_bresp	    = bresp_reg;
     assign s_axil_bvalid    = bvalid_reg;
 
-	assign	valid_write_address = s_axil_awvalid || !s_axil_awready;
-	assign	valid_write_data    = s_axil_wvalid  || !s_axil_wready;
-	assign	write_response_stall= s_axil_bvalid  && !s_axil_bvalid;
+    assign  valid_write_address = s_axil_awvalid || !s_axil_awready;
+    assign  valid_write_data    = s_axil_wvalid  || !s_axil_wready;
+    assign  write_response_stall= s_axil_bvalid  && !s_axil_bready;
 
     always @( posedge clk ) begin
         if (rst) begin
@@ -115,8 +115,8 @@ module axil_regfile #
             wready_reg <= 1'b1;
         end else if (write_response_stall) begin
             // The output channel is stalled
-            //	We can remain ready until valid
-            //	write data shows up
+            //  We can remain ready until valid
+            //  write data shows up
             wready_reg <= !valid_write_data;
         end else if (valid_write_address) begin
             // The output channel is clear, and a write address
@@ -135,8 +135,8 @@ module axil_regfile #
         end
     end
 
-	// Buffer the data
-	always @( posedge clk ) begin
+    // Buffer the data
+    always @( posedge clk ) begin
         if (s_axil_wready) begin
             pre_wdata <= s_axil_wdata;
             pre_wstrb <= s_axil_wstrb;
@@ -220,14 +220,14 @@ module axil_regfile #
 
     always @( posedge clk ) begin
         if ( rst ) begin
-		    arready_reg <= 1'b1;
+            arready_reg <= 1'b1;
         end else if (read_response_stall) begin
             // Outgoing channel is stalled
             //    As long as something is already in the buffer,
             //    arready_reg needs to stay low
-		    arready_reg <= !valid_read_request;
+            arready_reg <= !valid_read_request;
         end else begin
-		    arready_reg <= 1'b1;
+            arready_reg <= 1'b1;
         end
     end
 
